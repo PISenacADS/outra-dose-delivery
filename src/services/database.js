@@ -87,4 +87,36 @@ export const initDatabase = async () => {
   }
 };
 
+export const createUsuario = async (
+  nome_completo,
+  email,
+  telefone,
+  senha_hash,
+  data_nascimento,
+) => {
+  try {
+    const result = await db.runAsync(
+      "INSERT INTO usuario (nome_completo, email, telefone, senha_hash, data_nascimento) VALUES (?, ?, ?, ?, ?)",
+      [nome_completo, email, telefone, senha_hash, data_nascimento],
+    );
+    return { id: result.lastInsertRowId, nome_completo, email };
+  } catch (error) {
+    console.error("Erro ao criar usuário:", error);
+    throw error;
+  }
+};
+
+export const getUsuarioByEmail = async (email) => {
+  try {
+    const result = await db.getFirstAsync(
+      "SELECT * FROM usuario WHERE email = ?",
+      [email],
+    );
+    return result;
+  } catch (error) {
+    console.error("Erro ao buscar usuário:", error);
+    throw error;
+  }
+};
+
 export default db;

@@ -1,10 +1,48 @@
-import * as React from "react";
-import { useRouter } from "expo-router";
-import { StyleSheet, View, TextInput, Pressable, Text } from "react-native";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
+import * as React from "react";
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { getUsuarioByEmail } from "../services/database";
 
 const FrameComponent = () => {
   const router = useRouter();
+  
+  const [email, setEmail] = React.useState("");
+  const [senha, setSenha] = React.useState("");
+
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      Alert.alert("Atenção", "Preencha o e-mail e a senha.");
+      return;
+    }
+
+    try {
+      const usuario = await getUsuarioByEmail(email);
+
+      if (!usuario) {
+        Alert.alert("Erro", "Usuário não encontrado.");
+        return;
+      }
+
+      if (usuario.senha_hash !== senha) {
+        Alert.alert("Erro", "Senha incorreta.");
+        return;
+      }
+
+      // Login deu certo! Vai para a home.
+      router.push("/home");
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível fazer o login.");
+    }
+  };
+
   return (
     <View style={[styles.loginInner, styles.loginInnerLayout]}>
       <View style={[styles.frameParent, styles.loginInnerLayout]}>
@@ -22,6 +60,8 @@ const FrameComponent = () => {
                   style={[styles.eMailOuTelefone, styles.entrarTypo]}
                   placeholder="E-mail ou Telefone"
                   placeholderTextColor="rgba(0, 0, 0, 0.63)"
+                  value={email}
+                  onChangeText={setEmail}
                 />
               </View>
             </View>
@@ -37,11 +77,15 @@ const FrameComponent = () => {
                   style={[styles.eMailOuTelefone, styles.entrarTypo]}
                   placeholder="Senha"
                   placeholderTextColor="rgba(0, 0, 0, 0.63)"
+                  value={senha}
+                  onChangeText={setSenha}
+                  secureTextEntry
                 />
               </View>
             </View>
             <Pressable
               style={[styles.rectangleContainer, styles.rectangleLayout]}
+              onPress={handleLogin}
             >
               <View style={[styles.rectangleView, styles.rectangleLayout]} />
               <Text style={[styles.entrar, styles.entrarTypo]}>ENTRAR</Text>
