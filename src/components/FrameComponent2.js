@@ -1,10 +1,8 @@
 import * as React from "react";
-import { useRouter } from "expo-router";
 import { StyleSheet, View, TextInput, Pressable, Text } from "react-native";
 import { Image } from "expo-image";
 
-const FrameComponent = () => {
-  const router = useRouter();
+const FrameComponent2 = () => {
   return (
     <View style={[styles.loginInner, styles.loginInnerLayout]}>
       <View style={[styles.frameParent, styles.loginInnerLayout]}>
@@ -60,9 +58,7 @@ const FrameComponent = () => {
                 Não tenho uma conta?
               </Text>
             </View>
-            <Pressable onPress={() => router.push("/cadastro")}>
-              <Text style={styles.cadastraSe}>Cadastra-se</Text>
-            </Pressable>
+            <Text style={styles.cadastraSe}>Cadastra-se</Text>
           </View>
         </View>
       </View>
@@ -84,7 +80,7 @@ const styles = StyleSheet.create({
   entrarTypo: {
     zIndex: 1,
     textAlign: "left",
-    fontFamily: "Acme-Regular",
+    fontFamily: "Acme",
   },
   frameInnerLayout: {
     height: 63,
@@ -107,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     height: 30,
     textAlign: "left",
-    fontFamily: "Acme-Regular",
+    fontFamily: "Acme",
   },
   loginInner: {
     width: 371,
@@ -147,16 +143,11 @@ const styles = StyleSheet.create({
     width: 17,
     zIndex: 2,
   },
-  eMailOuTelefoneWrapper: {
-    height: 35,
-    paddingTop: 7,
-    width: 233,
-  },
   eMailOuTelefone: {
     width: 236,
-    height: 44,
-    fontSize: 23,
-    padding: 0,
+    height: 35, 
+    fontSize: 27,
+    padding: 0, 
   },
   rectangleGroup: {
     paddingHorizontal: 21,
@@ -205,7 +196,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   esqueceuASenha: {
-    width: 285,
+    width: 185,
   },
   frameContainer: {
     width: 341,
@@ -217,16 +208,16 @@ const styles = StyleSheet.create({
   },
   noTenhoUma: {
     marginRight: -3,
-    //width: 221,
+    width: 230,
   },
   cadastraSe: {
-    //width: 126,
+    width: 126,
     color: "#ffaf7d",
     fontSize: 24,
-    //height: 30,
+    height: 30,
     textAlign: "left",
-    fontFamily: "Acme-Regular",
+    fontFamily: "Acme",
   },
 });
 
-export default FrameComponent;
+export default FrameComponent2;
