@@ -1,18 +1,57 @@
-import * as React from "react";
+import { Image } from "expo-image";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 import {
-  ScrollView,
+  Alert,
+  ImageBackground,
+  Pressable,
   StyleSheet,
   Text,
   View,
-  Pressable,
-  ImageBackground,
 } from "react-native";
-import { Image } from "expo-image";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import FormFields from "../components/FormFields";
 import FrameComponent12 from "../components/FrameComponent12";
+import { createUsuario } from "../services/database";
 
 const Cadastro = () => {
+  const router = useRouter();
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [dataDeNascimento, setDataDeNascimento] = useState(null);
+
+  const handleCadastro = async () => {
+    if (!nome || !email || !senha || !confirmarSenha) {
+      Alert.alert("Atenção", "Preencha todos os campos.");
+      return;
+    }
+
+    if (senha !== confirmarSenha) {
+      Alert.alert("Erro", "As senhas não coincidem.");
+      return;
+    }
+
+    try {
+      await createUsuario(
+        nome,
+        email,
+        null,
+        senha,
+        dataDeNascimento ? dataDeNascimento.toISOString().split("T")[0] : null,
+      );
+      Alert.alert("Sucesso", "Conta criada com sucesso!", [
+        { text: "OK", onPress: () => router.push("/") },
+      ]);
+    } catch (error) {
+      Alert.alert(
+        "Erro",
+        "Não foi possível criar a conta. O e-mail já pode estar em uso.",
+      );
+    }
+  };
+
   return (
     <ImageBackground
       style={styles.cadastroIcon}
@@ -38,10 +77,24 @@ const Cadastro = () => {
           </View>
         </View>
         <View style={[styles.form, styles.formSpaceBlock]}>
-          <FormFields />
+          <FormFields
+            nome={nome}
+            setNome={setNome}
+            email={email}
+            setEmail={setEmail}
+            senha={senha}
+            setSenha={setSenha}
+            confirmarSenha={confirmarSenha}
+            setConfirmarSenha={setConfirmarSenha}
+            dataDeNascimento={dataDeNascimento}
+            setDataDeNascimento={setDataDeNascimento}
+          />
         </View>
         <View style={[styles.callToAction, styles.formSpaceBlock]}>
-          <Pressable style={[styles.rectangleParent, styles.frameChildLayout]}>
+          <Pressable
+            style={[styles.rectangleParent, styles.frameChildLayout]}
+            onPress={handleCadastro}
+          >
             <View style={[styles.frameChild, styles.frameChildLayout]} />
             <Text style={[styles.criarConta, styles.cadastroTypo]}>
               CRIAR CONTA
@@ -131,7 +184,7 @@ const styles = StyleSheet.create({
   },
   rectangleParent: {
     flexDirection: "row",
-    justifyContent: "center", 
+    justifyContent: "center",
     alignItems: "center",
   },
   frameChild: {
