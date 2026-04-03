@@ -1,19 +1,32 @@
-import * as React from "react";
-import { useState } from "react";
-import { StyleSheet, View, TextInput, Text, Pressable, Platform } from "react-native";
-import { Image } from "expo-image";
-
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Image } from "expo-image";
+import { useState } from "react";
+import {
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 const formatarData = (data) => {
   if (!data) return "Data de Nascimento";
   return data.toLocaleDateString("pt-BR");
 };
 
-const FormFields = () => {
-  
-  const [dataDeNascimento, setDataDeNascimento] = useState(null);
- 
+const FormFields = ({
+  nome,
+  setNome,
+  email,
+  setEmail,
+  senha,
+  setSenha,
+  confirmarSenha,
+  setConfirmarSenha,
+  dataDeNascimento,
+  setDataDeNascimento,
+}) => {
   const [mostrarPicker, setMostrarPicker] = useState(false);
 
   const showDatepicker = () => {
@@ -21,7 +34,7 @@ const FormFields = () => {
   };
 
   const onDateChange = (event, selectedDate) => {
-    setMostrarPicker(Platform.OS === "ios"); 
+    setMostrarPicker(Platform.OS === "ios");
     if (selectedDate) {
       setDataDeNascimento(selectedDate);
     }
@@ -29,25 +42,28 @@ const FormFields = () => {
 
   return (
     <View style={styles.formFields}>
-     
       <View style={styles.rectangleParent}>
         <View style={styles.frameChild} />
-        <Image 
-          source={require("../../assets/images/Field-Items.svg")} 
-          style={[styles.fieldItemsIcon, { tintColor: "#9d6100" }]} 
+        <Image
+          source={require("../../assets/images/Field-Items.svg")}
+          style={[styles.fieldItemsIcon, { tintColor: "#9d6100" }]}
         />
         <View style={styles.fieldDetails}>
           <TextInput
             style={styles.nomeCompleto}
             placeholder="Nome Completo"
             placeholderTextColor="rgba(0, 0, 0, 0.63)"
+            value={nome}
+            onChangeText={setNome}
           />
         </View>
       </View>
 
-      <Pressable style={[styles.rectangleParent, styles.groupSpaceBlock]} onPress={showDatepicker}>
+      <Pressable
+        style={[styles.rectangleParent, styles.groupSpaceBlock]}
+        onPress={showDatepicker}
+      >
         <View style={styles.frameChild} />
-       
         <Image
           source={require("../../assets/images/calendar.png")}
           style={styles.calendarIcon}
@@ -56,7 +72,6 @@ const FormFields = () => {
           <Text
             style={[
               styles.nomeCompleto,
-              
               !dataDeNascimento && { color: "rgba(0, 0, 0, 0.63)" },
             ]}
           >
@@ -67,55 +82,63 @@ const FormFields = () => {
 
       {mostrarPicker && (
         <DateTimePicker
-          value={dataDeNascimento || new Date()} 
+          value={dataDeNascimento || new Date()}
           mode="date"
-          display="default" 
+          display="default"
           onChange={onDateChange}
-          locale="pt-BR" 
+          locale="pt-BR"
         />
       )}
 
       <View style={[styles.rectangleGroup, styles.groupSpaceBlock]}>
         <View style={styles.frameChild} />
-        <Image 
-          source={require("../../assets/images/Frame.svg")} 
-          style={[styles.frameIcon, { tintColor: "#9d6100" }]} 
+        <Image
+          source={require("../../assets/images/Frame.svg")}
+          style={[styles.frameIcon, { tintColor: "#9d6100" }]}
         />
         <View style={styles.fieldDetails}>
           <TextInput
             style={styles.nomeCompleto}
             placeholder="E-mail ou telefone"
             placeholderTextColor="rgba(0, 0, 0, 0.63)"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
       </View>
 
       <View style={[styles.rectangleContainer, styles.groupViewLayout]}>
         <View style={[styles.frameInner, styles.groupViewLayout]} />
-        <Image 
-          source={require("../../assets/images/Frame1.svg")} 
-          style={[styles.frameIcon, { tintColor: "#9d6100" }]} 
+        <Image
+          source={require("../../assets/images/Frame1.svg")}
+          style={[styles.frameIcon, { tintColor: "#9d6100" }]}
         />
         <View style={styles.novaSenhaWrapper}>
           <TextInput
             style={styles.nomeCompleto}
             placeholder="Nova Senha"
             placeholderTextColor="rgba(0, 0, 0, 0.63)"
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry
           />
         </View>
       </View>
 
       <View style={[styles.groupView, styles.groupViewLayout]}>
         <View style={[styles.frameInner, styles.groupViewLayout]} />
-        <Image 
-          source={require("../../assets/images/Frame2.svg")} 
-          style={[styles.frameIcon, { tintColor: "#9d6100" }]} 
+        <Image
+          source={require("../../assets/images/Frame2.svg")}
+          style={[styles.frameIcon, { tintColor: "#9d6100" }]}
         />
         <View style={styles.fieldDetails}>
           <TextInput
             style={styles.nomeCompleto}
             placeholder="Confirmar Senha"
             placeholderTextColor="rgba(0, 0, 0, 0.63)"
+            value={confirmarSenha}
+            onChangeText={setConfirmarSenha}
+            secureTextEntry
           />
         </View>
       </View>
@@ -124,39 +147,35 @@ const FormFields = () => {
 };
 
 const styles = StyleSheet.create({
-  
   rectangleParent: {
     paddingHorizontal: 15,
     paddingVertical: 5,
     gap: 3,
     flexDirection: "row",
-    backgroundColor: "#fff", 
+    backgroundColor: "#fff",
     borderRadius: 46,
     height: 45,
     width: 314,
-    alignItems: "center", 
+    alignItems: "center",
   },
- 
   calendarIcon: {
     width: 35,
     height: 35,
-    tintColor: "#9d6100", 
+    tintColor: "#9d6100",
     zIndex: 1,
   },
-  
   nomeCompleto: {
     width: 236,
-    height: 40, 
+    height: 40,
     fontFamily: "Acme",
     fontSize: 20,
     textAlign: "left",
     zIndex: 1,
-    padding: 0, 
-    includeFontPadding: false, 
-    textAlignVertical: "center", 
-    color: "#000", 
+    padding: 0,
+    includeFontPadding: false,
+    textAlignVertical: "center",
+    color: "#000",
   },
-
   iconClr: {
     color: "#9d6100",
     zIndex: 1,
@@ -203,7 +222,7 @@ const styles = StyleSheet.create({
     borderRadius: 46,
     height: 45,
     width: 314,
-    alignItems: "center", // Garante o alinhamento
+    alignItems: "center",
   },
   frameIcon: {
     width: 32,
@@ -217,7 +236,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     gap: 3,
     flexDirection: "row",
-    alignItems: "center", 
+    alignItems: "center",
   },
   frameInner: {
     display: "none",
@@ -233,7 +252,7 @@ const styles = StyleSheet.create({
     paddingBottom: 7,
     paddingTop: 5,
     flexDirection: "row",
-    alignItems: "center", 
+    alignItems: "center",
   },
 });
 
