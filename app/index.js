@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import LoginScreen from "../src/screens/LoginScreen";
+import EnderecoScreen from "../src/screens/EnderecoScreen";
 import { initDatabase } from "../src/services/database";
 
 export default function Index() {
+  
+  /* ==========================================
+     CÓDIGO ORIGINAL COMENTADO PARA TESTES
+  =============================================
   const [dbReady, setDbReady] = useState(false);
 
   useEffect(() => {
@@ -17,6 +22,7 @@ export default function Index() {
       </View>
     );
   }
+  ============================================= */
 
-  return <LoginScreen />;
+  return <EnderecoScreen />;
 }
