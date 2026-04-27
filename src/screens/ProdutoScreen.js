@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-// Dados mockados baseados no seu design
 const PRODUTOS = [
   { id: '1', nome: 'Cerveja Heineken 600ml', preco: '9,79', imagem: 'https://via.placeholder.com/50' },
   { id: '2', nome: 'Cerveja Original 269ml', preco: '2,49', imagem: 'https://via.placeholder.com/50' },
@@ -49,9 +48,9 @@ export default function ProdutoScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.backgroundOverlay}>
         
-        {/* Cabeçalho */}
+        {}
         <View style={styles.header}>
-          {/* Logo atualizada apontando para assets */}
+          {}
           <Image 
             source={require('../../assets/images/Ellipse-1.png')} 
             style={styles.logo} 
@@ -59,7 +58,7 @@ export default function ProdutoScreen() {
           <Text style={styles.titulo}>BEBIDAS</Text>
         </View>
 
-        {/* Barra de Pesquisa */}
+        {}
         <View style={styles.buscaContainer}>
           <Ionicons name="search" size={20} color="#000" style={styles.iconeBusca} />
           <TextInput
@@ -72,7 +71,7 @@ export default function ProdutoScreen() {
           <Ionicons name="mic-outline" size={20} color="#000" style={styles.iconeMic} />
         </View>
 
-        {/* Categorias */}
+        {}
         <View style={styles.categoriasContainer}>
           {CATEGORIAS.map((cat) => (
             <TouchableOpacity key={cat} onPress={() => setCategoriaAtiva(cat)}>
@@ -86,10 +85,10 @@ export default function ProdutoScreen() {
           ))}
         </View>
 
-        {/* Linha separadora */}
+        {}
         <View style={styles.separador} />
 
-        {/* Lista de Produtos */}
+        {}
         <FlatList
           data={PRODUTOS}
           keyExtractor={item => item.id}
@@ -117,9 +116,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   logo: {
-    width: 140, // Ajuste o tamanho conforme necessário
+    width: 140,
     height: 140,
-    resizeMode: 'contain', // Garante que a imagem não fique distorcida
+    resizeMode: 'contain',
     marginBottom: 10,
   },
   titulo: {
