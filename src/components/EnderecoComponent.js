@@ -1,14 +1,16 @@
 import * as React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { Image } from "expo-image";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
-const mapPinIcon = require("../../assets/images/MapPin.svg");
+import MapPinIcon from "../../assets/images/MapPin.svg";
+import OctagonIcon from "../../assets/images/Octagon.svg";
+import RadioButtonIcon from "../../assets/images/RadioButton.svg";
 
 const FrameComponent = () => {
   const CardEndereco = ({ titulo, endereco, preco, iconStyle }) => (
     <View style={styles.card}>
       <View style={styles.iconContainer}>
-        <Image source={mapPinIcon} style={[styles.mappinIcon, iconStyle]} contentFit="contain" />
+        {/* 2. Usando a tag do SVG ao invés do <Image> */}
+        <MapPinIcon style={[styles.mappinIcon, iconStyle]} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.titulo}>{titulo}</Text>

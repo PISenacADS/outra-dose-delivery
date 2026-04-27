@@ -2,12 +2,12 @@ import * as React from "react";
 import { ScrollView, Image, StyleSheet, View, Text, ImageBackground } from "react-native";
 import FrameComponent from "../components/EnderecoComponent";
 import FrameComponent1 from "../components/EnderecoComponent1";
-import FrameComponent2 from "../components/EnderecoComponent2";
+import FrameComponent2 from "../components/TabBarComponent2";  
 
 const Entrega = () => {
   return (
     <View style={styles.mainContainer}>
-      {/* 1. Usamos ImageBackground para cobrir 100% da tela sem falhas */}
+     
       <ImageBackground
         source={require("../../assets/images/Rectangle-14.png")}
         style={styles.backgroundImage}
@@ -18,7 +18,6 @@ const Entrega = () => {
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
-          {/* Logo / Ellipse centralizada */}
           <View style={styles.logoWrapper}>
             <Image
               style={styles.logoImage}
@@ -27,22 +26,18 @@ const Entrega = () => {
             />
           </View>
 
-          {/* Título Centralizado */}
           <Text style={styles.titleText}>
             ONDE VAMOS ENTREGAR?
           </Text>
 
-          {/* Componentes de Conteúdo */}
           <View style={styles.contentWrapper}>
             <FrameComponent />
             <FrameComponent1 />
           </View>
           
-          {/* Espaço extra para o conteúdo não ficar atrás do menu fixo */}
           <View style={{ height: 100 }} />
         </ScrollView>
 
-        {/* 2. Menu fixo FORA do ScrollView para colar no fundo */}
         <FrameComponent2 />
       </ImageBackground>
     </View>
@@ -52,7 +47,7 @@ const Entrega = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#000", // Evita clarão branco
+    backgroundColor: "#000", 
   },
   backgroundImage: {
     flex: 1,
