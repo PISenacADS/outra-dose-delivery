@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
-import { Image } from "expo-image";
 
-const octagonIcon = require("../../assets/images/Octagon.svg");
-const radioButtonIcon = require("../../assets/images/RadioButton.svg");
+import OctagonIcon from "../../assets/images/Octagon.svg";
+import RadioButtonIcon from "../../assets/images/RadioButton.svg";
 
 const FrameComponent1 = () => {
   return (
@@ -11,19 +10,11 @@ const FrameComponent1 = () => {
       <View style={styles.contentWrapper}>
         <Text style={styles.title}>Opções de Entrega</Text>
 
-        {/* OPÇÃO PADRÃO */}
         <View style={styles.optionRow}>
           <View style={styles.iconContainer}>
-            <Image
-              source={octagonIcon}
-              style={styles.iconBase}
-              contentFit="contain"
-            />
-            <Image
-              source={radioButtonIcon}
-              style={styles.iconOverlay}
-              contentFit="contain"
-            />
+          
+            <OctagonIcon style={styles.iconBase} />
+            <RadioButtonIcon style={styles.iconOverlay} />
           </View>
           <Text style={styles.optionText}>
             Padrão(30-45 min) - R$ 5,00
@@ -33,11 +24,8 @@ const FrameComponent1 = () => {
         {/* OPÇÃO AGENDADA */}
         <View style={styles.optionRow}>
           <View style={styles.iconContainer}>
-            <Image
-              source={octagonIcon}
-              style={styles.iconBase}
-              contentFit="contain"
-            />
+           
+            <OctagonIcon style={styles.iconBase} />
           </View>
           <Text style={styles.optionText}>Agendada</Text>
         </View>
@@ -95,12 +83,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontFamily: "Inter",
     fontSize: 18,
-    flexShrink: 1, // Evita que o texto empurre tudo se for longo
+    flexShrink: 1, 
   },
   mainButton: {
     backgroundColor: "#af4706",
     borderRadius: 56,
-    height: 50, // Aumentei um pouco para caber melhor o texto de 25px
+    height: 50, 
     width: '100%',
     justifyContent: "center",
     alignItems: "center",
@@ -114,7 +102,7 @@ const styles = StyleSheet.create({
   mainButtonText: {
     color: "#fff",
     fontFamily: "Acme",
-    fontSize: 20, // Reduzi de 25 para 20 para garantir que não corte em telas menores
+    fontSize: 20, 
     textAlign: "center",
   },
 });

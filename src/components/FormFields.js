@@ -1,5 +1,4 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { Image } from "expo-image";
 import { useState } from "react";
 import {
   Platform,
@@ -8,7 +7,13 @@ import {
   Text,
   TextInput,
   View,
+  Image,
 } from "react-native";
+
+import FieldItemsIcon from "../../assets/images/Field-Items.svg";
+import FrameIcon from "../../assets/images/Frame.svg";
+import Frame1Icon from "../../assets/images/Frame1.svg";
+import Frame2Icon from "../../assets/images/Frame2.svg";
 
 const formatarData = (data) => {
   if (!data) return "Data de Nascimento";
@@ -44,9 +49,9 @@ const FormFields = ({
     <View style={styles.formFields}>
       <View style={styles.rectangleParent}>
         <View style={styles.frameChild} />
-        <Image
-          source={require("../../assets/images/Field-Items.svg")}
-          style={[styles.fieldItemsIcon, { tintColor: "#9d6100" }]}
+        <FieldItemsIcon
+          style={styles.fieldItemsIcon}
+          color="#9d6100" 
         />
         <View style={styles.fieldDetails}>
           <TextInput
@@ -92,9 +97,9 @@ const FormFields = ({
 
       <View style={[styles.rectangleGroup, styles.groupSpaceBlock]}>
         <View style={styles.frameChild} />
-        <Image
-          source={require("../../assets/images/Frame.svg")}
-          style={[styles.frameIcon, { tintColor: "#9d6100" }]}
+        <FrameIcon
+          style={styles.frameIcon}
+          color="#9d6100"
         />
         <View style={styles.fieldDetails}>
           <TextInput
@@ -109,9 +114,9 @@ const FormFields = ({
 
       <View style={[styles.rectangleContainer, styles.groupViewLayout]}>
         <View style={[styles.frameInner, styles.groupViewLayout]} />
-        <Image
-          source={require("../../assets/images/Frame1.svg")}
-          style={[styles.frameIcon, { tintColor: "#9d6100" }]}
+        <Frame1Icon
+          style={styles.frameIcon}
+          color="#9d6100"
         />
         <View style={styles.novaSenhaWrapper}>
           <TextInput
@@ -127,9 +132,9 @@ const FormFields = ({
 
       <View style={[styles.groupView, styles.groupViewLayout]}>
         <View style={[styles.frameInner, styles.groupViewLayout]} />
-        <Image
-          source={require("../../assets/images/Frame2.svg")}
-          style={[styles.frameIcon, { tintColor: "#9d6100" }]}
+        <Frame2Icon
+          style={styles.frameIcon}
+          color="#9d6100"
         />
         <View style={styles.fieldDetails}>
           <TextInput

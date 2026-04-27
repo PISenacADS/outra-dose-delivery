@@ -1,57 +1,38 @@
 import * as React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Image } from "expo-image";
 
-const frameIconSource = require("../../assets/images/Inicio.svg");
-const frame1IconSource = require("../../assets/images/Categorias.svg");
-const frame2IconSource = require("../../assets/images/Cart-Profile-Icons.svg");
-const cartProfileIconsSource = require("../../assets/images/perfil.svg");
+// 1. Importamos os SVGs diretamente como Componentes React (com letra maiúscula)
+import InicioIcon from "../../assets/images/Inicio.svg";
+import CategoriasIcon from "../../assets/images/Categorias.svg";
+import CartProfileIcon from "../../assets/images/Cart-Profile-Icons.svg";
+import PerfilIcon from "../../assets/images/perfil.svg";
 
 const FrameComponent2 = () => {
   return (
     <View style={styles.navBarContainer}>
-     
+      
       <View style={styles.topBorder} />
 
       <View style={styles.menuWrapper}>
         
-        
         <TouchableOpacity style={styles.menuItem}>
-          <Image
-            source={frameIconSource}
-            style={styles.iconStyle}
-            contentFit="contain"
-          />
+          {/* 2. Usamos o SVG como uma tag normal, passando largura e altura */}
+          <InicioIcon width={30} height={30} />
           <Text style={styles.menuText}>Inicio</Text>
         </TouchableOpacity>
 
-       
         <TouchableOpacity style={styles.menuItem}>
-          <Image
-            source={frame1IconSource}
-            style={styles.iconStyle}
-            contentFit="contain"
-          />
+          <CategoriasIcon width={30} height={30} />
           <Text style={styles.menuText}>Categorias</Text>
         </TouchableOpacity>
 
-        
         <TouchableOpacity style={styles.menuItem}>
-          <Image
-            source={frame2IconSource}
-            style={styles.iconStyle}
-            contentFit="contain"
-          />
+          <CartProfileIcon width={30} height={30} />
           <Text style={styles.menuText}>Carrinho</Text>
         </TouchableOpacity>
 
-      
         <TouchableOpacity style={styles.menuItem}>
-          <Image
-            source={cartProfileIconsSource}
-            style={styles.iconStyle}
-            contentFit="contain"
-          />
+          <PerfilIcon width={30} height={30} />
           <Text style={styles.menuText}>Perfil</Text>
         </TouchableOpacity>
 
@@ -61,7 +42,7 @@ const FrameComponent2 = () => {
 };
 
 const styles = StyleSheet.create({
- navBarContainer: {
+  navBarContainer: {
     backgroundColor: "#2D2D2D",
     width: '100%',
     height: 90,           
@@ -89,10 +70,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 4,
-  },
-  iconStyle: {
-    width: 30,
-    height: 30,
   },
   menuText: {
     color: "#fff",

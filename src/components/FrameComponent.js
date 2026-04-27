@@ -36,7 +36,6 @@ const FrameComponent = () => {
         return;
       }
 
-      // Login deu certo! Vai para a home.
       router.push("/home");
     } catch (error) {
       Alert.alert("Erro", "Não foi possível fazer o login.");
