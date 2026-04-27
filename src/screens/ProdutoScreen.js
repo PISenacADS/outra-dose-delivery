@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Certifique-se de ter o @expo/vector-icons instalado
+import { Ionicons } from '@expo/vector-icons';
 
 // Dados mockados baseados no seu design
 const PRODUTOS = [
@@ -27,7 +27,6 @@ export default function ProdutoScreen() {
   const [pesquisa, setPesquisa] = useState('');
   const [categoriaAtiva, setCategoriaAtiva] = useState('Cervejas');
 
-  // Este item pode ser movido para o seu arquivo src/components/ProdutoCard.js
   const renderProduto = ({ item }) => (
     <View style={styles.cardProduto}>
       <View style={styles.lixeiraContainer}>
@@ -48,15 +47,15 @@ export default function ProdutoScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Background amadeirado pode ser um ImageBackground depois */}
       <View style={styles.backgroundOverlay}>
         
         {/* Cabeçalho */}
         <View style={styles.header}>
-          {/* Substitua pela imagem da logo oficial do Outra Dose em assets */}
-          <View style={styles.logoPlaceholder}>
-            <Text style={styles.logoTexto}>OUTRA DOSE</Text>
-          </View>
+          {/* Logo atualizada apontando para assets */}
+          <Image 
+            source={require('../../assets/images/Ellipse-1.png')} 
+            style={styles.logo} 
+          />
           <Text style={styles.titulo}>BEBIDAS</Text>
         </View>
 
@@ -106,7 +105,7 @@ export default function ProdutoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#3a2318', // Cor base simulando o fundo amadeirado
+    backgroundColor: '#3a2318', 
   },
   backgroundOverlay: {
     flex: 1,
@@ -117,20 +116,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
   },
-  logoPlaceholder: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    borderWidth: 2,
-    borderColor: '#d4a017',
-    alignItems: 'center',
-    justifyContent: 'center',
+  logo: {
+    width: 140, // Ajuste o tamanho conforme necessário
+    height: 140,
+    resizeMode: 'contain', // Garante que a imagem não fique distorcida
     marginBottom: 10,
-  },
-  logoTexto: {
-    color: '#d4a017',
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   titulo: {
     color: '#d4a017',
