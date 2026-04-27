@@ -6,6 +6,7 @@ import { initDatabase } from "../src/services/database";
 import AcompanhamentoPedidoScreen from "../src/screens/AcompanhamentoPedidoScreen";
 import CadastroScreen from "../src/screens/CadastroScreen";
 import ProdutoScreen from "../src/screens/ProdutoScreen";
+import PerfilScreen from "../src/screens/PerfilScreen";
 
 export default function Index() {
   
@@ -27,6 +28,6 @@ export default function Index() {
   }
   ============================================= */
 
-  return <ProdutoScreen />;
+  return <PerfilScreen />;
 
 }
