@@ -5,6 +5,7 @@ import EnderecoScreen from "../src/screens/EnderecoScreen";
 import { initDatabase } from "../src/services/database";
 import AcompanhamentoPedidoScreen from "../src/screens/AcompanhamentoPedidoScreen";
 import CadastroScreen from "../src/screens/CadastroScreen";
+import ProdutoScreen from "../src/screens/ProdutoScreen";
 
 export default function Index() {
   
@@ -26,6 +27,6 @@ export default function Index() {
   }
   ============================================= */
 
-  return <AcompanhamentoPedidoScreen />;
+  return <ProdutoScreen />;
 
 }
