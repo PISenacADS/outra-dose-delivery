@@ -1,0 +1,32 @@
+{
+  "compraId": "COMPRA-1-1777334603446",
+  "dataHora": "2026-04-28T00:03:23.446Z",
+  "dataHoraFormatada": "27/04/2026, 21:03:23",
+  "usuario": {
+    "id": "1",
+    "email": "teste@outra-dose.com",
+    "nomeCompleto": "João Teste"
+  },
+  "produtos": [
+    {
+      "produtoId": 2,
+      "nomeProduto": "Vinho Nacional Dom Bosco",
+      "precoUnitario": 14.73,
+      "precoUnitarioFormatado": "R$ 14.73",
+      "quantidade": 2,
+      "subtotal": 29.46,
+      "subtotalFormatado": "R$ 29.46"
+    }
+  ],
+  "resumo": {
+    "totalItens": 1,
+    "quantidadeTotal": 2,
+    "valorTotal": 29.46,
+    "valorTotalFormatado": "R$ 29.46"
+  },
+  "pagamento": {
+    "metodo": "Mercado Pago",
+    "status": "mock",
+    "preferenceId": "mock_1777334603459"
+  }
+}
