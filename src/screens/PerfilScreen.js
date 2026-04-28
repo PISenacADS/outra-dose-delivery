@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 const HISTORICO_PEDIDOS = [
   {
@@ -30,9 +31,10 @@ const HISTORICO_PEDIDOS = [
 ];
 
 export default function PerfilScreen() {
+  const router = useRouter();
 
-  const renderActionButton = (iconName, label, IconComponent) => (
-    <TouchableOpacity style={styles.actionButton}>
+  const renderActionButton = (iconName, label, IconComponent, onPress) => (
+    <TouchableOpacity style={styles.actionButton} onPress={onPress}>
       <View style={styles.actionIconContainer}>{IconComponent}</View>
       <Text style={styles.actionButtonText}>{label}</Text>
       <Ionicons
@@ -69,18 +71,16 @@ export default function PerfilScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      {}
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {}
         <View style={styles.header}>
-          <TouchableOpacity style={styles.exitButton}>
+          {}
+          <TouchableOpacity style={styles.exitButton} onPress={() => router.replace("/")}>
             <Text style={styles.exitText}>Sair</Text>
           </TouchableOpacity>
 
-          {}
           <View style={styles.avatarContainer}>
             <Image
               source={require("../../assets/images/Ellipse-1.png")}
@@ -91,12 +91,12 @@ export default function PerfilScreen() {
           <Text style={styles.userName}>JOAO</Text>
         </View>
 
-        {}
         <View style={styles.actionsContainer}>
           {renderActionButton(
             "person-circle-outline",
             "Meus dados",
             <Ionicons name="person-circle-outline" size={28} color="#666" />,
+            () => console.log("Ir para Meus Dados")
           )}
           {renderActionButton(
             "location-exit",
@@ -106,10 +106,11 @@ export default function PerfilScreen() {
               size={28}
               color="#666"
             />,
+            // Lembrar de verificar pq não ta indo
+            () => router.push("/endereco") 
           )}
         </View>
 
-        {}
         <View style={styles.historicoContainer}>
           <View style={styles.historicoHeaderRow}>
             <Text style={styles.historicoTitle}>Historico de Pedidos</Text>
@@ -118,9 +119,7 @@ export default function PerfilScreen() {
             </TouchableOpacity>
           </View>
 
-          {}
           <View style={styles.tableContainer}>
-            {}
             <View style={styles.tableHeader}>
               <Text style={[styles.headerCell, styles.cellPed]}>Pedidos</Text>
               <Text style={[styles.headerCell, styles.cellData]}>Data</Text>
@@ -129,12 +128,10 @@ export default function PerfilScreen() {
               <Text style={[styles.headerCell, styles.cellStatus]}>Status</Text>
             </View>
 
-            {}
             {HISTORICO_PEDIDOS.map(renderHistoricoRow)}
           </View>
         </View>
 
-        {}
         <View style={styles.buscaContainer}>
           <Ionicons
             name="search"
@@ -195,7 +192,6 @@ const styles = StyleSheet.create({
   },
   profileIconOverlay: {
     position: "absolute",
-
     transform: [{ translateY: 0 }],
   },
   userName: {
@@ -216,7 +212,6 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     height: 65,
     paddingHorizontal: 20,
-
     elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
@@ -244,11 +239,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8, // RN Moderno
+    gap: 8,
     marginBottom: 15,
   },
   historicoTitle: {
-    color: "#d4a017", // Dourado
+    color: "#d4a017",
     fontSize: 21,
     fontWeight: "bold",
     textAlign: "center",
@@ -256,9 +251,7 @@ const styles = StyleSheet.create({
   downloadButton: {
     padding: 3,
   },
-  tableContainer: {
-    
-  },
+  tableContainer: {},
   tableHeader: {
     flexDirection: "row",
     paddingBottom: 6,
@@ -283,13 +276,11 @@ const styles = StyleSheet.create({
     fontSize: 11,
     paddingHorizontal: 2,
   },
-
   cellPed: { width: "13%" },
   cellData: { width: "20%" },
   cellItens: { width: "38%" },
   cellValor: { width: "16%" },
   cellStatus: { width: "13%" },
-
   statusEntregue: {
     color: "#a0f0a0",
     fontWeight: "600",
@@ -297,12 +288,12 @@ const styles = StyleSheet.create({
   buscaContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#d3d3d3", 
+    backgroundColor: "#d3d3d3",
     borderRadius: 25,
     paddingHorizontal: 15,
     height: 40,
     marginTop: 5,
-    marginBottom: 10, 
+    marginBottom: 10,
   },
   iconeBusca: {
     marginRight: 10,
