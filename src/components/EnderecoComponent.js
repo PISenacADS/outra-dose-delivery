@@ -1,15 +1,18 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 
 import MapPinIcon from "../../assets/images/MapPin.svg";
 import OctagonIcon from "../../assets/images/Octagon.svg";
 import RadioButtonIcon from "../../assets/images/RadioButton.svg";
 
 const FrameComponent = () => {
+  const router = useRouter();
+
   const CardEndereco = ({ titulo, endereco, preco, iconStyle }) => (
     <View style={styles.card}>
       <View style={styles.iconContainer}>
-        {/* 2. Usando a tag do SVG ao invés do <Image> */}
+        {}
         <MapPinIcon style={[styles.mappinIcon, iconStyle]} />
       </View>
       <View style={styles.textContainer}>
@@ -38,12 +41,17 @@ const FrameComponent = () => {
         preco="R$ 8,00" 
       />
 
-      <View style={styles.btnAdicionar}>
+      {}
+      <TouchableOpacity 
+        style={styles.btnAdicionar}
+        onPress={() => router.push("/novo-endereco")}
+      >
         <Text style={styles.btnText}>+ Adicionar novo endereço</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
   flex: 1,
@@ -61,11 +69,10 @@ backgroundImage: {
   card: {
     backgroundColor: "#FFFFFF",
     borderRadius: 30,
-    flexDirection: "row", // Alinha ícone e texto lado a lado
+    flexDirection: "row", 
     padding: 15,
     marginBottom: 12,
     alignItems: "center",
-    // Sombra para destacar do fundo de madeira
     elevation: 4,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -82,7 +89,7 @@ backgroundImage: {
     height: 35,
   },
   textContainer: {
-    flex: 1, // Faz o texto ocupar o resto da largura
+    flex: 1, 
   },
   titulo: {
     fontSize: 18,
@@ -92,13 +99,13 @@ backgroundImage: {
   },
   enderecoText: {
     fontSize: 14,
-    color: "#444444", // Cinza escuro para leitura fácil
+    color: "#444444", 
     lineHeight: 18,
   },
   precoText: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#333333", // Quase preto para destacar
+    color: "#333333", 
     marginTop: 2,
   },
   btnAdicionar: {
@@ -117,7 +124,7 @@ backgroundImage: {
   },
   contentContainer: {
   flex: 1,
-  paddingHorizontal: 0, // Garante que nada empurre as bordas para dentro
+  paddingHorizontal: 0, 
 },
 });
 
