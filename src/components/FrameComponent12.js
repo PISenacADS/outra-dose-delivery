@@ -1,9 +1,11 @@
 import * as React from "react";
 import { useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Pressable } from "react-native"; // <-- Pressable adicionado
 import { Checkbox } from "react-native-paper";
+import { useRouter } from "expo-router"; // <-- Importação adicionada
 
 const FrameComponent12 = () => {
+  const router = useRouter(); // <-- Inicialização do Router
   const [agreementContainerchecked, setAgreementContainerchecked] =
     useState(false);
 
@@ -16,7 +18,10 @@ const FrameComponent12 = () => {
               Já tem uma conta?
             </Text>
           </View>
-          <Text style={[styles.entre, styles.entreTypo]}>Entre</Text>
+          {/* <-- Pressable com rota para voltar ao Login adicionado */}
+          <Pressable onPress={() => router.replace("/")}>
+            <Text style={[styles.entre, styles.entreTypo]}>Entre</Text>
+          </Pressable>
         </View>
       </View>
       <View style={[styles.agreementContainerParent, styles.agreementLayout]}>

@@ -1,275 +1,131 @@
-import { Image } from "expo-image";
-import { useRouter } from "expo-router";
 import * as React from "react";
-import {
-  Alert,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import { getUsuarioByEmail } from "../services/database";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
+
+import MapPinIcon from "../../assets/images/MapPin.svg";
+import OctagonIcon from "../../assets/images/Octagon.svg";
+import RadioButtonIcon from "../../assets/images/RadioButton.svg";
 
 const FrameComponent = () => {
   const router = useRouter();
-  
-  const [email, setEmail] = React.useState("");
-  const [senha, setSenha] = React.useState("");
 
-  const handleLogin = async () => {
-    if (!email || !senha) {
-      Alert.alert("Atenção", "Preencha o e-mail e a senha.");
-      return;
-    }
-
-    try {
-      const usuario = await getUsuarioByEmail(email);
-
-      if (!usuario) {
-        Alert.alert("Erro", "Usuário não encontrado.");
-        return;
-      }
-
-      if (usuario.senha_hash !== senha) {
-        Alert.alert("Erro", "Senha incorreta.");
-        return;
-      }
-
-      router.push("/home");
-    } catch (error) {
-      Alert.alert("Erro", "Não foi possível fazer o login.");
-    }
-  };
-
-  return (
-    <View style={[styles.loginInner, styles.loginInnerLayout]}>
-      <View style={[styles.frameParent, styles.loginInnerLayout]}>
-        <View style={styles.loginFormWrapper}>
-          <View style={styles.loginForm}>
-            <View style={[styles.rectangleParent, styles.frameChildLayout]}>
-              <View style={[styles.frameChild, styles.frameChildLayout]} />
-              <Image
-                style={styles.frameItem}
-                contentFit="cover"
-                source={require("../../assets/images/Rectangle-5.png")}
-              />
-              <View style={styles.eMailOuTelefoneWrapper}>
-                <TextInput
-                  style={[styles.eMailOuTelefone, styles.entrarTypo]}
-                  placeholder="E-mail ou Telefone"
-                  placeholderTextColor="rgba(0, 0, 0, 0.63)"
-                  value={email}
-                  onChangeText={setEmail}
-                />
-              </View>
-            </View>
-            <View style={[styles.rectangleGroup, styles.frameInnerLayout]}>
-              <View style={[styles.frameInner, styles.frameInnerLayout]} />
-              <Image
-                style={styles.rectangleIcon}
-                contentFit="cover"
-                source={require("../../assets/images/Rectangle-4.png")}
-              />
-              <View style={styles.senhaWrapper}>
-                <TextInput
-                  style={[styles.eMailOuTelefone, styles.entrarTypo]}
-                  placeholder="Senha"
-                  placeholderTextColor="rgba(0, 0, 0, 0.63)"
-                  value={senha}
-                  onChangeText={setSenha}
-                  secureTextEntry
-                />
-              </View>
-            </View>
-            <Pressable
-              style={[styles.rectangleContainer, styles.rectangleLayout]}
-              onPress={handleLogin}
-            >
-              <View style={[styles.rectangleView, styles.rectangleLayout]} />
-              <Text style={[styles.entrar, styles.entrarTypo]}>ENTRAR</Text>
-            </Pressable>
-          </View>
-        </View>
-        <View style={styles.frameGroup}>
-          <View style={[styles.esqueceuASenhaWrapper, styles.wrapperLayout]}>
-            <Text style={[styles.esqueceuASenha, styles.noTenhoUmaTypo]}>
-              Esqueceu a senha?
-            </Text>
-          </View>
-          <View style={[styles.frameContainer, styles.wrapperLayout]}>
-            <View style={[styles.noTenhoUmaContaWrapper, styles.wrapperLayout]}>
-              <Text style={[styles.noTenhoUma, styles.noTenhoUmaTypo]}>
-                Não tenho uma conta?
-              </Text>
-            </View>
-            <Pressable onPress={() => router.push("/cadastro")}>
-              <Text style={styles.cadastraSe}>Cadastra-se</Text>
-            </Pressable>
-          </View>
-        </View>
+  const CardEndereco = ({ titulo, endereco, preco, iconStyle }) => (
+    <View style={styles.card}>
+      <View style={styles.iconContainer}>
+        {/* 2. Usando a tag do SVG ao invés do <Image> */}
+        <MapPinIcon style={[styles.mappinIcon, iconStyle]} />
+      </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.titulo}>{titulo}</Text>
+        <Text style={styles.enderecoText}>{endereco}</Text>
+        <Text style={styles.precoText}>Preço: {preco}</Text>
       </View>
     </View>
   );
-};
 
+  return (
+    <View style={styles.container}>
+      <CardEndereco 
+        titulo="Casa" 
+        endereco="Rua Galvão, 24, JD. Grajaú, Santo Amaro" 
+        preco="R$ 10,00" 
+      />
+      <CardEndereco 
+        titulo="Trabalho" 
+        endereco="Rua Mario, 24, JD. Alina, Morumbi" 
+        preco="R$ 15,00" 
+      />
+      <CardEndereco 
+        titulo="Localização atual" 
+        endereco="Rua Mario, 24, JD. Alina, Morumbi" 
+        preco="R$ 8,00" 
+      />
+
+      {}
+      <TouchableOpacity 
+        style={styles.btnAdicionar} 
+        onPress={() => router.push("/novo-endereco")}
+      >
+        <Text style={styles.btnText}>+ Adicionar novo endereço</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 const styles = StyleSheet.create({
-  loginInnerLayout: {
-    height: 352,
-    zIndex: null,
-  },
-  frameChildLayout: {
-    backgroundColor: "#fff",
-    borderRadius: 56,
-    height: 64,
-    width: 319,
-  },
-  entrarTypo: {
-    zIndex: 1,
-    textAlign: "left",
-    fontFamily: "Acme-Regular",
-  },
-  frameInnerLayout: {
-    height: 63,
-    backgroundColor: "#fff",
-    borderRadius: 56,
-    width: 319,
-  },
-  rectangleLayout: {
-    backgroundColor: "#af4706",
-    height: 65,
-    borderRadius: 56,
-    width: 319,
-  },
-  wrapperLayout: {
-    height: 30,
-    zIndex: null,
-  },
-  noTenhoUmaTypo: {
-    color: "#9f9018",
-    fontSize: 24,
-    height: 30,
-    textAlign: "left",
-    fontFamily: "Acme-Regular",
-  },
-  loginInner: {
-    width: 371,
-    paddingLeft: 30,
+  container: {
+  flex: 1,
+  width: '100%',
+},
+backgroundImage: {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
+  width: '100%',
+  height: '100%',
+},
+  card: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 30,
     flexDirection: "row",
+    padding: 15,
+    marginBottom: 12,
+    alignItems: "center",
+    
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-  frameParent: {
-    gap: 44,
-    width: 341,
+  iconContainer: {
+    marginRight: 15,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  loginFormWrapper: {
-    width: 330,
-    paddingLeft: 11,
-    height: 233,
-    flexDirection: "row",
-    zIndex: null,
-  },
-  loginForm: {
-    gap: 20,
-    width: 319,
-    height: 233,
-    zIndex: null,
-  },
-  rectangleParent: {
-    paddingLeft: 29,
-    paddingTop: 11,
-    paddingRight: 25,
-    paddingBottom: 5,
-    gap: 15,
-    flexDirection: "row",
-  },
-  frameChild: {
-    display: "none",
-  },
-  frameItem: {
-    height: 47,
-    width: 17,
-    zIndex: 2,
-  },
-  eMailOuTelefoneWrapper: {
+  mappinIcon: {
+    width: 35,
     height: 35,
-    paddingTop: 7,
-    width: 233,
   },
-  eMailOuTelefone: {
-    width: 236,
-    height: 44,
-    fontSize: 23,
-    padding: 0,
+  textContainer: {
+    flex: 1,
   },
-  rectangleGroup: {
-    paddingHorizontal: 21,
+  titulo: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#000000",
+    marginBottom: 2,
+  },
+  enderecoText: {
+    fontSize: 14,
+    color: "#444444",
+    lineHeight: 18,
+  },
+  precoText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#333333",
+    marginTop: 2,
+  },
+  btnAdicionar: {
+    backgroundColor: "#A64500",
+    borderRadius: 25,
     paddingVertical: 12,
-    gap: 7,
-    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 5,
+    width: "90%",
+    alignSelf: "center",
   },
-  frameInner: {
-    display: "none",
+  btnText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
-  rectangleIcon: {
-    height: 39,
-    width: 33,
-    zIndex: 2,
-  },
-  senhaWrapper: {
-    height: 34,
-    paddingTop: 6,
-    width: 233,
-  },
-  rectangleContainer: {
-    paddingHorizontal: 85,
-    paddingBottom: 16,
-    paddingTop: 6,
-    flexDirection: "row",
-  },
-  rectangleView: {
-    display: "none",
-  },
-  entrar: {
-    height: 42,
-    width: 152,
-    fontSize: 40,
-    lineHeight: 42,
-    color: "#fff",
-  },
-  frameGroup: {
-    height: 75,
-    gap: 15,
-    width: 341,
-    zIndex: null,
-  },
-  esqueceuASenhaWrapper: {
-    width: 262,
-    paddingLeft: 80,
-    flexDirection: "row",
-  },
-  esqueceuASenha: {
-    width: 285,
-  },
-  frameContainer: {
-    width: 341,
-    flexDirection: "row",
-  },
-  noTenhoUmaContaWrapper: {
-    width: 215,
-    paddingRight: 0,
-  },
-  noTenhoUma: {
-    marginRight: -3,
-    //width: 221,
-  },
-  cadastraSe: {
-    //width: 126,
-    color: "#ffaf7d",
-    fontSize: 24,
-    //height: 30,
-    textAlign: "left",
-    fontFamily: "Acme-Regular",
-  },
+  contentContainer: {
+  flex: 1,
+  paddingHorizontal: 0,
+},
 });
 
 export default FrameComponent;

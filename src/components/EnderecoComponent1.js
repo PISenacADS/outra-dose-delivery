@@ -1,10 +1,13 @@
 import * as React from "react";
 import { Text, StyleSheet, View, Pressable } from "react-native";
+import { useRouter } from "expo-router";
 
 import OctagonIcon from "../../assets/images/Octagon.svg";
 import RadioButtonIcon from "../../assets/images/RadioButton.svg";
 
 const FrameComponent1 = () => {
+  const router = useRouter();
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.contentWrapper}>
@@ -21,7 +24,7 @@ const FrameComponent1 = () => {
           </Text>
         </View>
 
-        {/* OPÇÃO AGENDADA */}
+        {}
         <View style={styles.optionRow}>
           <View style={styles.iconContainer}>
            
@@ -31,8 +34,8 @@ const FrameComponent1 = () => {
         </View>
       </View>
 
-      {/* BOTÃO CONTINUAR */}
-      <Pressable style={styles.mainButton}>
+      {}
+      <Pressable style={styles.mainButton} onPress={() => router.push("/pagamento")}>
         <Text style={styles.mainButtonText}>
           Continuar para pagamento
         </Text>
