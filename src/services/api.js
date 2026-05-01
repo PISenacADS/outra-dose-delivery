@@ -21,6 +21,14 @@ export const getCarrinho = async (userId) => {
   return data;
 };
 
+export const getPedidos = async (userId) => {
+  const response = await fetch(`${BASE_URL}/pedidos`, {
+    headers: { "x-user-id": String(userId) },
+  });
+  const data = await response.json();
+  return data;
+};
+
 export const adicionarAoCarrinho = async (userId, produto) => {
   const response = await fetch(`${BASE_URL}/carrinho/adicionar`, {
     method: "POST",

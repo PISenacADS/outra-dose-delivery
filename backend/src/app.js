@@ -16,7 +16,9 @@ app.use(morgan("dev"));
 const produtosRoutes = require("./routes/produtos.routes");
 const pagamentoRoutes = require("./routes/pagamento.routes");
 const carrinhoRoutes = require("./routes/carrinho.routes");
+const pedidosRoutes = require("./routes/pedidos.routes");
 
+app.use("/api/pedidos", pedidosRoutes);
 app.use("/api/produtos", produtosRoutes);
 app.use("/api/pagamento", pagamentoRoutes);
 app.use("/api/carrinho", carrinhoRoutes);
