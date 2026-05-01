@@ -51,7 +51,7 @@ export default function HomeScreen() {
 
             <Image source={logo} style={styles.bannerImage} />
           </View>
-
+//dasgdjfadffd 
           <View style={styles.dots}>
             <View style={styles.dotActive} />
             <View style={styles.dot} />

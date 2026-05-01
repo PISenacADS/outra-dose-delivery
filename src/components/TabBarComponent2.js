@@ -1,15 +1,14 @@
 import * as React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router"; // <-- Importação adicionada
+import { useRouter } from "expo-router"; 
 
-// 1. Importamos os SVGs diretamente como Componentes React (com letra maiúscula)
 import InicioIcon from "../../assets/images/Inicio.svg";
 import CategoriasIcon from "../../assets/images/Categorias.svg";
 import CartProfileIcon from "../../assets/images/Cart-Profile-Icons.svg";
 import PerfilIcon from "../../assets/images/perfil.svg";
 
 const FrameComponent2 = () => {
-  const router = useRouter(); // <-- Inicialização do Router adicionada
+  const router = useRouter(); 
 
   return (
     <View style={styles.navBarContainer}>
@@ -18,26 +17,25 @@ const FrameComponent2 = () => {
 
       <View style={styles.menuWrapper}>
         
-        {/* <-- Rota para Início adicionada */}
+        {/* Rota para a HOME */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/home")}>
-          {/* 2. Usamos o SVG como uma tag normal, passando largura e altura */}
           <InicioIcon width={30} height={30} />
           <Text style={styles.menuText}>Inicio</Text>
         </TouchableOpacity>
 
-        {/* <-- Rota para Categorias/Produtos adicionada */}
+        {/* Rota para as CATEGORIAS/PRODUTOS */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/produtos")}>
           <CategoriasIcon width={30} height={30} />
           <Text style={styles.menuText}>Categorias</Text>
         </TouchableOpacity>
 
-        {/* <-- Rota para Carrinho adicionada */}
+        {/* Rota para o CARRINHO */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/carrinho")}>
           <CartProfileIcon width={30} height={30} />
           <Text style={styles.menuText}>Carrinho</Text>
         </TouchableOpacity>
 
-        {/* <-- Rota para Perfil adicionada */}
+        {/* Rota para o PERFIL */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/perfil")}>
           <PerfilIcon width={30} height={30} />
           <Text style={styles.menuText}>Perfil</Text>
