@@ -1,4 +1,3 @@
-import ProdutoScreen from "../src/screens/ProdutoScreen";
 
 export default function Index() {
   /* ==========================================
@@ -19,5 +18,5 @@ export default function Index() {
   }
   ============================================= */
 
-  return <ProdutoScreen />;
+  return <PerfilScreen />;
 }

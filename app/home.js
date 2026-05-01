@@ -1,6 +1,6 @@
 import React from 'react';
-import ProdutoScreen from '../src/screens/ProdutoScreen';
+import HomeScreen from '../src/screens/HomeScreen';
 
 export default function RotaHome() {
-  return <ProdutoScreen />;
+  return <HomeScreen />;
 }

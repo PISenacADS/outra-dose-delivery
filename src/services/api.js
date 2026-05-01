@@ -1,6 +1,6 @@
 const BASE_URL = "http://10.0.2.2:3000/api";
+// const BASE_URL = 'http://localhost:3000/api';
 
-//Produtos
 export const getProdutos = async () => {
   const response = await fetch(`${BASE_URL}/produtos`);
   const data = await response.json();
@@ -13,7 +13,6 @@ export const getProdutoById = async (id) => {
   return data;
 };
 
-//Carrinho
 export const getCarrinho = async (userId) => {
   const response = await fetch(`${BASE_URL}/carrinho`, {
     headers: { "x-user-id": String(userId) },
@@ -44,7 +43,6 @@ export const removerDoCarrinho = async (userId, produtoId) => {
   return data;
 };
 
-//Pagamento
 export const processarPagamento = async (userId, itens, usuario) => {
   const response = await fetch(`${BASE_URL}/pagamento`, {
     method: "POST",
