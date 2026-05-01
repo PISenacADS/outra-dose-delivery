@@ -1,15 +1,6 @@
-import { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
-import LoginScreen from "../src/screens/LoginScreen";
-import EnderecoScreen from "../src/screens/EnderecoScreen";
-import { initDatabase } from "../src/services/database";
-import AcompanhamentoPedidoScreen from "../src/screens/AcompanhamentoPedidoScreen";
-import CadastroScreen from "../src/screens/CadastroScreen";
 import ProdutoScreen from "../src/screens/ProdutoScreen";
-import PerfilScreen from "../src/screens/PerfilScreen";
 
 export default function Index() {
-  
   /* ==========================================
      CÓDIGO ORIGINAL COMENTADO PARA TESTES
   =============================================
@@ -28,6 +19,5 @@ export default function Index() {
   }
   ============================================= */
 
-  return <PerfilScreen />;
-
+  return <ProdutoScreen />;
 }
