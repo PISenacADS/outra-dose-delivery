@@ -7,7 +7,7 @@ import AcompanhamentoPedidoScreen from "../src/screens/AcompanhamentoPedidoScree
 import CadastroScreen from "../src/screens/CadastroScreen";
 import ProdutoScreen from "../src/screens/ProdutoScreen";
 import PerfilScreen from "../src/screens/PerfilScreen";
-
+import HomeScreen from "../src/screens/HomeScreen";
 export default function Index() {
   
   /* ==========================================
@@ -28,6 +28,6 @@ export default function Index() {
   }
   ============================================= */
 
-  return <PerfilScreen />;
+  return <HomeScreen />;
 
 }

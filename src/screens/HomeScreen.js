@@ -9,83 +9,96 @@ import {
   ImageBackground,
   TextInput,
 } from "react-native";
+import { useRouter } from "expo-router";
 
+import FrameComponent2 from "../components/TabBarComponent2";
 
-import wood from "../assets/wood.png";
-import logo from "../assets/logo.png";
+import wood from "../../assets/images/Rectangle-14.png";
+import logo from "../../assets/images/Ellipse-1.png";
 
 export default function HomeScreen() {
   const [endereco, setEndereco] = useState("");
+  const router = useRouter(); 
 
   return (
-    <ImageBackground source={wood} style={styles.background} resizeMode="cover">
-      <ScrollView contentContainerStyle={styles.container}>
-        <Image source={logo} style={styles.logo} />
+    <View style={styles.mainContainer}>
+      <ImageBackground source={wood} style={styles.background} resizeMode="cover">
+        <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+          <Image source={logo} style={styles.logo} />
 
-        <View style={styles.addressBox}>
-          <Text style={styles.addressIcon}>📍</Text>
+          <View style={styles.addressBox}>
+            <Text style={styles.addressIcon}>📍</Text>
 
-          <TextInput
-            placeholder="Digite seu endereço de entrega..."
-            placeholderTextColor="#d8d8d8"
-            value={endereco}
-            onChangeText={setEndereco}
-            style={styles.addressInput}
-          />
-        </View>
-
-        <View style={styles.banner}>
-          <View style={styles.bannerTextArea}>
-            <Text style={styles.bannerTitle}>
-              Happy Hour Outra Dose: 20% OFF em Cervejas Artesanais! 🔥
-            </Text>
-
-            <TouchableOpacity style={styles.bannerButton}>
-              <Text style={styles.bannerButtonText}>Aproveitar Agora!</Text>
-            </TouchableOpacity>
+            <TextInput
+              placeholder="Digite seu endereço de entrega..."
+              placeholderTextColor="#d8d8d8"
+              value={endereco}
+              onChangeText={setEndereco}
+              style={styles.addressInput}
+            />
           </View>
 
-          <Image source={logo} style={styles.bannerImage} />
-        </View>
+          <View style={styles.banner}>
+            <View style={styles.bannerTextArea}>
+              <Text style={styles.bannerTitle}>
+                Happy Hour Outra Dose: 20% OFF em Cervejas Artesanais! 🔥
+              </Text>
 
-        <View style={styles.dots}>
-          <View style={styles.dotActive} />
-          <View style={styles.dot} />
-          <View style={styles.dot} />
-        </View>
-
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categories}>
-          {categories.map((item, index) => (
-            <View key={index} style={styles.category}>
-              <View style={styles.categoryCircle}>
-                <Image source={logo} style={styles.categoryImage} />
-              </View>
-              <Text style={styles.categoryText}>{item}</Text>
+              <TouchableOpacity style={styles.bannerButton}>
+                <Text style={styles.bannerButtonText}>Aproveitar Agora!</Text>
+              </TouchableOpacity>
             </View>
-          ))}
+
+            <Image source={logo} style={styles.bannerImage} />
+          </View>
+
+          <View style={styles.dots}>
+            <View style={styles.dotActive} />
+            <View style={styles.dot} />
+            <View style={styles.dot} />
+          </View>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categories}>
+            {categories.map((item, index) => (
+              <TouchableOpacity 
+                key={index} 
+                style={styles.category} 
+                onPress={() => router.push("/produtos")}
+              >
+                <View style={styles.categoryCircle}>
+                  <Image source={logo} style={styles.categoryImage} />
+                </View>
+                <Text style={styles.categoryText}>{item}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+
+          <Text style={styles.sectionTitle}>As Mais Geladas!</Text>
+
+          <View style={styles.productsContainer}>
+            {products.map((item, index) => (
+              <View key={index} style={styles.card}>
+                <Image source={logo} style={styles.productImage} />
+
+                <Text style={styles.productName}>{item.name}</Text>
+
+                <View style={styles.bottom}>
+                  <Text style={styles.price}>{item.price}</Text>
+
+                  <TouchableOpacity style={styles.addButton}>
+                    <Text style={styles.addText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
+          </View>
+          
+          <View style={{ height: 90 }} />
         </ScrollView>
 
-        <Text style={styles.sectionTitle}>As Mais Geladas!</Text>
-
-      <View style={styles.productsContainer}>
-          {products.map((item, index) => (
-            <View key={index} style={styles.card}>
-              <Image source={logo} style={styles.productImage} />
-
-              <Text style={styles.productName}>{item.name}</Text>
-
-              <View style={styles.bottom}>
-                <Text style={styles.price}>{item.price}</Text>
-
-                <TouchableOpacity style={styles.addButton}>
-                  <Text style={styles.addText}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-    </ImageBackground>
+        <FrameComponent2 />
+      </ImageBackground>
+    </View>
   );
 }
 
@@ -97,28 +110,29 @@ const products = [
   { name: "Budweiser 350ml", price: "R$ 5,90" },
   { name: "Skol 269ml", price: "R$ 3,99" },
   { name: "Corona Extra", price: "R$ 11,90" },
-
   { name: "Bombay Sapphire Gin", price: "R$ 89,90" },
   { name: "Whisky Jack Daniels", price: "R$ 182,49" },
   { name: "Whisky Red Label", price: "R$ 79,90" },
-
   { name: "Vinho Dom Bosco", price: "R$ 14,73" },
   { name: "Vinho Concha y Toro", price: "R$ 39,90" },
-
   { name: "Coca-Cola 1L", price: "R$ 7,49" },
   { name: "Guaraná Antarctica 2L", price: "R$ 8,99" },
 ];
 
-
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: "#000",
+  },
   background: {
     flex: 1,
+    width: "100%",
   },
 
   container: {
-    paddingTop: 28,
+    paddingTop: 45, 
     paddingHorizontal: 14,
-    paddingBottom: 30,
+    paddingBottom: 20,
   },
 
   logo: {
@@ -209,6 +223,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
+  dot: {
+    width: 6,
+    height: 6,
+    backgroundColor: "#555",
+    borderRadius: 3,
+  },
 
   categories: {
     marginBottom: 16,
@@ -250,13 +270,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
- card: {
-  width: "32%",
-  backgroundColor: "rgba(18,28,38,0.92)",
-  borderRadius: 12,
-  padding: 5,
-  marginBottom: 18,
-},
+  card: {
+    width: "32%",
+    backgroundColor: "rgba(18,28,38,0.92)",
+    borderRadius: 12,
+    padding: 5,
+    marginBottom: 18,
+  },
 
   productImage: {
     width: "100%",
@@ -304,8 +324,8 @@ const styles = StyleSheet.create({
   },
 
   productsContainer: {
-  flexDirection: "row",
-  flexWrap: "wrap",
-  justifyContent: "space-between",
-},
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
 });
