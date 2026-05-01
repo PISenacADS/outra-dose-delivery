@@ -17,25 +17,21 @@ const FrameComponent2 = () => {
 
       <View style={styles.menuWrapper}>
         
-        {/* Rota para a HOME */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/home")}>
           <InicioIcon width={30} height={30} />
           <Text style={styles.menuText}>Inicio</Text>
         </TouchableOpacity>
 
-        {/* Rota para as CATEGORIAS/PRODUTOS */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/produtos")}>
           <CategoriasIcon width={30} height={30} />
           <Text style={styles.menuText}>Categorias</Text>
         </TouchableOpacity>
 
-        {/* Rota para o CARRINHO */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/carrinho")}>
           <CartProfileIcon width={30} height={30} />
           <Text style={styles.menuText}>Carrinho</Text>
         </TouchableOpacity>
 
-        {/* Rota para o PERFIL */}
         <TouchableOpacity style={styles.menuItem} onPress={() => router.push("/perfil")}>
           <PerfilIcon width={30} height={30} />
           <Text style={styles.menuText}>Perfil</Text>

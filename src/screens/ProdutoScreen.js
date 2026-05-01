@@ -13,6 +13,7 @@ import {
   View,
 } from "react-native";
 import { adicionarAoCarrinho, getProdutos } from "../services/api";
+import FrameComponent2 from "../components/TabBarComponent2";
 
 const CATEGORIAS = ["Cervejas", "Vinhos", "Whiskey", "Combos"];
 
@@ -151,7 +152,9 @@ export default function ProdutoScreen() {
           />
         )}
       </View>
+      <FrameComponent2 />
     </SafeAreaView>
+    
   );
 }
 
