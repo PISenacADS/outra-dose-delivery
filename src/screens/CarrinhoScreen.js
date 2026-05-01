@@ -15,6 +15,8 @@ import {
   removerDoCarrinho,
 } from "../services/api";
 
+import FrameComponent2 from "../components/TabBarComponent2";
+
 const CarrinhoScreen = () => {
   const router = useRouter();
 
@@ -157,7 +159,7 @@ const CarrinhoScreen = () => {
           )}
         </ScrollView>
 
-        <View style={styles.footer}>
+                <View style={styles.footer}>
           <View style={styles.totalContainer}>
             <Text style={[styles.totalLabel, styles.acmeTypo]}>TOTAL:</Text>
             <Text style={[styles.totalValue, styles.acmeTypo]}>
@@ -176,6 +178,8 @@ const CarrinhoScreen = () => {
           </Pressable>
         </View>
       </View>
+
+      <FrameComponent2 />
     </ImageBackground>
   );
 };
@@ -185,34 +189,40 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontFamily: "Acme",
   },
-  buttonLayout: {
-    backgroundColor: "#af4706",
-    borderRadius: 49,
-    width: 314,
-    height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-  },
+buttonLayout: {
+  backgroundColor: "#af4706",
+  borderRadius: 49,
+  width: 314,
+  height: 50,
+  justifyContent: "center",
+  alignItems: "center",
+  elevation: 5,
+},
   backgroundIcon: {
     flex: 1,
     width: "100%",
     height: "100%",
   },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    paddingTop: 40,
-    paddingBottom: 20,
-  },
+container: {
+  flex: 1,
+  alignItems: "center",
+  paddingTop: 40,
+  paddingBottom: 110,
+},
   header: {
     width: "100%",
     paddingHorizontal: 30,
     marginBottom: 20,
   },
-  title: {
-    fontSize: 35,
-    color: "#9f9018",
-  },
+ title: {
+  fontSize: 38,
+  color: "#f5d76e",
+  fontFamily: "Acme",
+  textAlign: "center",
+  textShadowColor: "#000000",
+  textShadowOffset: { width: 2, height: 2 },
+  textShadowRadius: 4,
+},
   scrollContainer: {
     flex: 1,
     width: "100%",
@@ -280,14 +290,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  footer: {
-    width: "100%",
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    borderTopWidth: 1,
-    borderColor: "rgba(255,255,255,0.2)",
-  },
+ footer: {
+  width: "90%",
+  alignItems: "center",
+  paddingHorizontal: 20,
+  paddingVertical: 20,
+  marginBottom: 95,
+  backgroundColor: "rgba(17, 17, 17, 0.57)",
+  borderRadius: 25,
+  borderWidth: 1,
+  borderColor: "#af4706",
+},
   totalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -302,10 +315,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: "#9f9018",
   },
-  actionButtonText: {
-    fontSize: 28,
-    color: "#fff",
-  },
+actionButtonText: {
+  fontSize: 24,
+  color: "#fff",
+  fontFamily: "Acme",
+  textAlign: "center",
+},
 });
 
 export default CarrinhoScreen;
