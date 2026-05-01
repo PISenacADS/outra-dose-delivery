@@ -1,90 +1,156 @@
-import { Image } from "expo-image";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   ImageBackground,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  ScrollView,
 } from "react-native";
+import {
+  getCarrinho,
+  processarPagamento,
+  removerDoCarrinho,
+} from "../services/api";
 
 const CarrinhoScreen = () => {
   const router = useRouter();
 
-  
-  const [itensCarrinho, setItensCarrinho] = useState([
-    { id: "1", nome: "Cerveja Heineken 330ml", preco: 6.50, quantidade: 6 },
-    { id: "2", nome: "Vodka Absolut 1L", preco: 89.90, quantidade: 1 },
-  ]);
+  const userId = 1;
+  const [itensCarrinho, setItensCarrinho] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    carregarCarrinho();
+  }, []);
+
+  const carregarCarrinho = async () => {
+    try {
+      const data = await getCarrinho(userId);
+      if (data.success) {
+        setItensCarrinho(data.data.itens);
+      }
+    } catch (error) {
+      console.error("Erro ao carregar carrinho:", error);
+    }
+  };
 
   const aumentarQuantidade = (id) => {
-    setItensCarrinho(itensCarrinho.map(item => 
-      item.id === id ? { ...item, quantidade: item.quantidade + 1 } : item
-    ));
+    setItensCarrinho(
+      itensCarrinho.map((item) =>
+        item.produtoId === id
+          ? { ...item, quantidade: item.quantidade + 1 }
+          : item,
+      ),
+    );
   };
 
   const diminuirQuantidade = (id) => {
-    setItensCarrinho(itensCarrinho.map(item => 
-      item.id === id && item.quantidade > 1 ? { ...item, quantidade: item.quantidade - 1 } : item
-    ));
+    setItensCarrinho(
+      itensCarrinho.map((item) =>
+        item.produtoId === id && item.quantidade > 1
+          ? { ...item, quantidade: item.quantidade - 1 }
+          : item,
+      ),
+    );
   };
 
-  const removerItem = (id) => {
-    setItensCarrinho(itensCarrinho.filter(item => item.id !== id));
+  const removerItem = async (id) => {
+    try {
+      await removerDoCarrinho(userId, id);
+      setItensCarrinho(itensCarrinho.filter((item) => item.produtoId !== id));
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível remover o item.");
+    }
   };
 
   const calcularTotal = () => {
-    return itensCarrinho.reduce((total, item) => total + (item.preco * item.quantidade), 0).toFixed(2);
+    return itensCarrinho
+      .reduce((total, item) => total + item.preco * item.quantidade, 0)
+      .toFixed(2);
   };
 
-  const handleFinalizarPedido = () => {
+  const handleFinalizarPedido = async () => {
     if (itensCarrinho.length === 0) {
-      Alert.alert("Atenção", "Seu carrinho está vazio. Adicione bebidas antes de finalizar.");
+      Alert.alert(
+        "Atenção",
+        "Seu carrinho está vazio. Adicione bebidas antes de finalizar.",
+      );
       return;
     }
-    
-    Alert.alert("Sucesso", "Pedido finalizado com sucesso!", [
-      { text: "OK", onPress: () => router.push("/pagamento") } 
-    ]);
+
+    try {
+      setLoading(true);
+      const data = await processarPagamento(userId, itensCarrinho, {
+        email: "cliente@outra-dose.com",
+        nome: "Cliente",
+      });
+
+      if (data.success) {
+        Alert.alert("Pedido confirmado!", `Compra: ${data.compraId}`, [
+          { text: "OK", onPress: () => router.push("/pagamento") },
+        ]);
+      }
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possível finalizar o pedido.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <ImageBackground
       style={styles.backgroundIcon}
-      source={require("../../assets/images/Cadastro.png")} 
+      source={require("../../assets/images/Cadastro.png")}
     >
       <View style={styles.container}>
-        
-       <View style={styles.header}>
+        <View style={styles.header}>
           <Text style={[styles.title, styles.acmeTypo]}>SEU CARRINHO</Text>
         </View>
 
-        <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.scrollContent}>
+        <ScrollView
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.scrollContent}
+        >
           {itensCarrinho.length === 0 ? (
             <Text style={styles.emptyText}>Nenhuma bebida no carrinho.</Text>
           ) : (
             itensCarrinho.map((item) => (
-              <View key={item.id} style={styles.cartItem}>
+              <View key={item.produtoId} style={styles.cartItem}>
                 <View style={styles.itemInfo}>
-                  <Text style={[styles.itemName, styles.acmeTypo]}>{item.nome}</Text>
-                  <Text style={styles.itemPrice}>R$ {item.preco.toFixed(2).replace('.', ',')}</Text>
+                  <Text style={[styles.itemName, styles.acmeTypo]}>
+                    {item.nome}
+                  </Text>
+                  <Text style={styles.itemPrice}>
+                    R$ {item.preco.toFixed(2).replace(".", ",")}
+                  </Text>
                 </View>
 
                 <View style={styles.quantityControl}>
-                  <Pressable onPress={() => diminuirQuantidade(item.id)} style={styles.qtyButton}>
+                  <Pressable
+                    onPress={() => diminuirQuantidade(item.produtoId)}
+                    style={styles.qtyButton}
+                  >
                     <Text style={styles.qtyButtonText}>-</Text>
                   </Pressable>
-                  <Text style={[styles.qtyText, styles.acmeTypo]}>{item.quantidade}</Text>
-                  <Pressable onPress={() => aumentarQuantidade(item.id)} style={styles.qtyButton}>
+                  <Text style={[styles.qtyText, styles.acmeTypo]}>
+                    {item.quantidade}
+                  </Text>
+                  <Pressable
+                    onPress={() => aumentarQuantidade(item.produtoId)}
+                    style={styles.qtyButton}
+                  >
                     <Text style={styles.qtyButtonText}>+</Text>
                   </Pressable>
                 </View>
-                
-                <Pressable onPress={() => removerItem(item.id)} style={styles.removeButton}>
-                   <Text style={styles.removeText}>X</Text>
+
+                <Pressable
+                  onPress={() => removerItem(item.produtoId)}
+                  style={styles.removeButton}
+                >
+                  <Text style={styles.removeText}>X</Text>
                 </Pressable>
               </View>
             ))
@@ -94,17 +160,21 @@ const CarrinhoScreen = () => {
         <View style={styles.footer}>
           <View style={styles.totalContainer}>
             <Text style={[styles.totalLabel, styles.acmeTypo]}>TOTAL:</Text>
-            <Text style={[styles.totalValue, styles.acmeTypo]}>R$ {calcularTotal().replace('.', ',')}</Text>
+            <Text style={[styles.totalValue, styles.acmeTypo]}>
+              R$ {calcularTotal().replace(".", ",")}
+            </Text>
           </View>
 
           <Pressable
             style={[styles.actionButton, styles.buttonLayout]}
             onPress={handleFinalizarPedido}
+            disabled={loading}
           >
-            <Text style={[styles.actionButtonText, styles.acmeTypo]}>FINALIZAR PEDIDO</Text>
+            <Text style={[styles.actionButtonText, styles.acmeTypo]}>
+              {loading ? "PROCESSANDO..." : "FINALIZAR PEDIDO"}
+            </Text>
           </Pressable>
         </View>
-
       </View>
     </ImageBackground>
   );
@@ -141,7 +211,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 35,
-    color: "#9f9018", 
+    color: "#9f9018",
   },
   scrollContainer: {
     flex: 1,
@@ -161,7 +231,7 @@ const styles = StyleSheet.create({
   },
   cartItem: {
     flexDirection: "row",
-    backgroundColor: "rgba(255, 255, 255, 0.9)", 
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     borderRadius: 15,
     padding: 15,
     alignItems: "center",
@@ -233,7 +303,7 @@ const styles = StyleSheet.create({
     color: "#9f9018",
   },
   actionButtonText: {
-    fontSize: 28, 
+    fontSize: 28,
     color: "#fff",
   },
 });

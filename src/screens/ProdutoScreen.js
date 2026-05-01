@@ -11,6 +11,8 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import FrameComponent2 from '../components/TabBarComponent2'; 
+
 const PRODUTOS = [
   { id: '1', nome: 'Cerveja Heineken 600ml', preco: '9,79', imagem: 'https://via.placeholder.com/50' },
   { id: '2', nome: 'Cerveja Original 269ml', preco: '2,49', imagem: 'https://via.placeholder.com/50' },
@@ -20,7 +22,7 @@ const PRODUTOS = [
   { id: '6', nome: 'Coca-Cola 1l', preco: '7,49', imagem: 'https://via.placeholder.com/50' },
 ];
 
-const CATEGORIAS = ['Vinhos', 'Cervejas', 'Whishey', 'Combos'];
+const CATEGORIAS = ['Vinhos', 'Cervejas', 'Whisky', 'Combos'];
 
 export default function ProdutoScreen() {
   const [pesquisa, setPesquisa] = useState('');
@@ -48,9 +50,7 @@ export default function ProdutoScreen() {
     <SafeAreaView style={styles.container}>
       <View style={styles.backgroundOverlay}>
         
-        {}
         <View style={styles.header}>
-          {}
           <Image 
             source={require('../../assets/images/Ellipse-1.png')} 
             style={styles.logo} 
@@ -58,7 +58,6 @@ export default function ProdutoScreen() {
           <Text style={styles.titulo}>BEBIDAS</Text>
         </View>
 
-        {}
         <View style={styles.buscaContainer}>
           <Ionicons name="search" size={20} color="#000" style={styles.iconeBusca} />
           <TextInput
@@ -71,7 +70,6 @@ export default function ProdutoScreen() {
           <Ionicons name="mic-outline" size={20} color="#000" style={styles.iconeMic} />
         </View>
 
-        {}
         <View style={styles.categoriasContainer}>
           {CATEGORIAS.map((cat) => (
             <TouchableOpacity key={cat} onPress={() => setCategoriaAtiva(cat)}>
@@ -85,10 +83,8 @@ export default function ProdutoScreen() {
           ))}
         </View>
 
-        {}
         <View style={styles.separador} />
 
-        {}
         <FlatList
           data={PRODUTOS}
           keyExtractor={item => item.id}
@@ -97,6 +93,9 @@ export default function ProdutoScreen() {
           showsVerticalScrollIndicator={false}
         />
       </View>
+
+      {}
+      <FrameComponent2 />
     </SafeAreaView>
   );
 }
@@ -168,7 +167,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   listaProdutos: {
-    paddingBottom: 20,
+    paddingBottom: 110,
   },
   cardProduto: {
     flexDirection: 'row',
