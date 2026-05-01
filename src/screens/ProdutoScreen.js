@@ -2,55 +2,19 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   FlatList,
   Image,
   SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  View,
 } from "react-native";
+import { adicionarAoCarrinho, getProdutos } from "../services/api";
 
-const PRODUTOS = [
-  {
-    id: "1",
-    nome: "Cerveja Heineken 600ml",
-    preco: "9,79",
-    imagem: "https://via.placeholder.com/50",
-  },
-  {
-    id: "2",
-    nome: "Cerveja Original 269ml",
-    preco: "2,49",
-    imagem: "https://via.placeholder.com/50",
-  },
-  {
-    id: "3",
-    nome: "Vinho Nacional Dom Bosco",
-    preco: "14,73",
-    imagem: "https://via.placeholder.com/50",
-  },
-  {
-    id: "4",
-    nome: "Whiskey Jack Daniel's 375ml",
-    preco: "182,49",
-    imagem: "https://via.placeholder.com/50",
-  },
-  {
-    id: "5",
-    nome: "Whiskey Jack Daniels Honey 1l",
-    preco: "162,49",
-    imagem: "https://via.placeholder.com/50",
-  },
-  {
-    id: "6",
-    nome: "Coca-Cola 1l",
-    preco: "7,49",
-    imagem: "https://via.placeholder.com/50",
-  },
-];
-
-const CATEGORIAS = ["Vinhos", "Cervejas", "Whishey", "Combos"];
+const CATEGORIAS = ["Cervejas", "Vinhos", "Whiskey", "Combos"];
 
 export default function ProdutoScreen() {
   const router = useRouter();
@@ -121,9 +85,7 @@ export default function ProdutoScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.backgroundOverlay}>
-        {}
         <View style={styles.header}>
-          {}
           <Image
             source={require("../../assets/images/Ellipse-1.png")}
             style={styles.logo}
@@ -170,18 +132,25 @@ export default function ProdutoScreen() {
 
         <View style={styles.separador} />
 
-        {}
-        <FlatList
-          data={PRODUTOS}
-          keyExtractor={(item) => item.id}
-          renderItem={renderProduto}
-          contentContainerStyle={styles.listaProdutos}
-          showsVerticalScrollIndicator={false}
-        />
+        {loading ? (
+          <ActivityIndicator
+            size="large"
+            color="#d4a017"
+            style={{ marginTop: 40 }}
+          />
+        ) : (
+          <FlatList
+            data={produtosFiltrados}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={renderProduto}
+            contentContainerStyle={styles.listaProdutos}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={
+              <Text style={styles.emptyText}>Nenhum produto encontrado.</Text>
+            }
+          />
+        )}
       </View>
-
-      {}
-      <FrameComponent2 />
     </SafeAreaView>
   );
 }
@@ -223,17 +192,13 @@ const styles = StyleSheet.create({
     opacity: 0.3,
     marginBottom: 15,
   },
-  listaProdutos: {
-    paddingBottom: 20,
-  },
+  listaProdutos: { paddingBottom: 20 },
   cardProduto: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 15,
   },
-  lixeiraContainer: {
-    marginRight: 10,
-  },
+  lixeiraContainer: { marginRight: 10 },
   produtoInfoContainer: {
     flex: 1,
     flexDirection: "row",
