@@ -255,7 +255,7 @@ const styles = StyleSheet.create({
     height: 48,
     resizeMode: "contain",
   },
-//ggg
+
   categoryText: {
     color: "#d7d7d7",
     fontSize: 12,
