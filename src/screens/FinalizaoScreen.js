@@ -4,12 +4,11 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Image,
   ImageBackground,
-  Linking,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -19,13 +18,14 @@ import {
   View,
 } from "react-native";
 import { processarPagamento } from "../services/api";
+import { getEnderecoPadrao } from "../services/database";
 
 const Finalizacao = () => {
   const router = useRouter();
   const [metodoSelecionado, setMetodoSelecionado] = useState("pix");
   const [loading, setLoading] = useState(false);
+  const [enderecoSelecionado, setEnderecoSelecionado] = useState(null);
 
-  // Futuramente vem do contexto/carrinho
   const userId = 1;
   const itensCarrinho = [
     {
@@ -35,6 +35,19 @@ const Finalizacao = () => {
       quantidade: 2,
     },
   ];
+
+  useEffect(() => {
+    carregarEndereco();
+  }, []);
+
+  const carregarEndereco = async () => {
+    try {
+      const end = await getEnderecoPadrao(userId);
+      setEnderecoSelecionado(end);
+    } catch (error) {
+      console.error("Erro ao carregar endereço:", error);
+    }
+  };
 
   const handlePagar = async () => {
     try {
@@ -46,15 +59,12 @@ const Finalizacao = () => {
 
       if (data.success) {
         Alert.alert(
-          "Redirecionar para pagamento?",
-          `Pedido: ${data.compraId}\nModo: ${data.modo}`,
+          "Pedido criado!",
+          `ID: ${data.compraId}\n\nModo: ${data.modo}\n\nEm produção, o usuário seria redirecionado para o Mercado Pago.`,
           [
             {
-              text: "Pagar agora",
-              onPress: async () => {
-                await Linking.openURL(data.init_point);
-                router.push("/acompanhamento");
-              },
+              text: "Confirmar pagamento",
+              onPress: () => router.push("/acompanhamento"),
             },
             { text: "Cancelar", style: "cancel" },
           ],
@@ -86,6 +96,41 @@ const Finalizacao = () => {
           </View>
 
           <Text style={styles.titulo}>PAGAMENTOS</Text>
+
+          {/* ENDEREÇO DE ENTREGA */}
+          <TouchableOpacity
+            style={styles.enderecoCard}
+            onPress={() => router.push("/endereco")}
+          >
+            <MaterialCommunityIcons
+              name="map-marker"
+              size={22}
+              color="#9f9018"
+            />
+            <View style={{ flex: 1, marginLeft: 10 }}>
+              {enderecoSelecionado ? (
+                <>
+                  <Text style={styles.enderecoLabel}>
+                    {enderecoSelecionado.label}
+                  </Text>
+                  <Text style={styles.enderecoTexto}>
+                    {enderecoSelecionado.rua}, {enderecoSelecionado.numero}
+                    {enderecoSelecionado.complemento
+                      ? `, ${enderecoSelecionado.complemento}`
+                      : ""}
+                  </Text>
+                  <Text style={styles.enderecoSub}>
+                    {enderecoSelecionado.bairro} — {enderecoSelecionado.cidade}
+                  </Text>
+                </>
+              ) : (
+                <Text style={styles.enderecoLabel}>
+                  Adicionar endereço de entrega
+                </Text>
+              )}
+            </View>
+            <Ionicons name="chevron-forward" size={20} color="#9f9018" />
+          </TouchableOpacity>
 
           {/* PIX */}
           <TouchableOpacity
@@ -174,6 +219,7 @@ const Finalizacao = () => {
           </TouchableOpacity>
         </ScrollView>
 
+        {/* MENU INFERIOR */}
         <View style={styles.menuInferior}>
           <TouchableOpacity
             style={styles.itemMenu}
@@ -222,6 +268,17 @@ const styles = StyleSheet.create({
     color: "#9f9018",
     marginBottom: 22,
   },
+  enderecoCard: {
+    backgroundColor: "#f2f2f2",
+    borderRadius: 20,
+    padding: 15,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 18,
+  },
+  enderecoLabel: { fontSize: 16, fontWeight: "bold", color: "#333" },
+  enderecoTexto: { fontSize: 14, color: "#555", marginTop: 2 },
+  enderecoSub: { fontSize: 12, color: "#888", marginTop: 2 },
   cardOpcao: {
     backgroundColor: "#f2f2f2",
     borderRadius: 30,

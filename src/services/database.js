@@ -100,6 +100,19 @@ export const initDatabase = async () => {
   }
 };
 
+export const getEnderecoPadrao = async (userId) => {
+  try {
+    const result = await db.getFirstAsync(
+      "SELECT * FROM endereco WHERE usuario_id = ? AND padrao = 1 LIMIT 1",
+      [userId],
+    );
+    return result;
+  } catch (error) {
+    console.error("Erro ao buscar endereço padrão:", error);
+    throw error;
+  }
+};
+
 export const getEnderecosByUsuario = async (userId) => {
   try {
     const result = await db.getAllAsync(
