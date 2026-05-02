@@ -1,5 +1,7 @@
-const BASE_URL = "http://10.0.2.2:3000/api";
+//const BASE_URL = "http://10.0.2.2:3000/api";
 // const BASE_URL = 'http://localhost:3000/api';
+
+const BASE_URL = "http://192.168.15.4:3000/api";
 
 export const getProdutos = async () => {
   const response = await fetch(`${BASE_URL}/produtos`);
