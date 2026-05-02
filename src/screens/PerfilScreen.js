@@ -2,6 +2,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import FrameComponent2 from "../components/TabBarComponent2";
+import DadosScreen from "./DadosScreen";
 import {
   ActivityIndicator,
   Image,
@@ -86,7 +87,7 @@ export default function PerfilScreen() {
         </View>
 
         <View style={styles.actionsContainer}>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity style={styles.actionButton} onPress={() => router.push("/Dados")}>
             <View style={styles.actionIconContainer}>
               <Ionicons name="person-circle-outline" size={28} color="#666" />
             </View>
