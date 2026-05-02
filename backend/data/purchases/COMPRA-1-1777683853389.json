@@ -1,0 +1,32 @@
+{
+  "compraId": "COMPRA-1-1777683853389",
+  "dataHora": "2026-05-02T01:04:13.389Z",
+  "dataHoraFormatada": "01/05/2026, 22:04:13",
+  "usuario": {
+    "id": "1",
+    "email": "cliente@outra-dose.com",
+    "nomeCompleto": "Cliente"
+  },
+  "produtos": [
+    {
+      "produtoId": 1,
+      "nomeProduto": "Cerveja Heineken 600ml",
+      "precoUnitario": 9.79,
+      "precoUnitarioFormatado": "R$ 9.79",
+      "quantidade": 2,
+      "subtotal": 19.58,
+      "subtotalFormatado": "R$ 19.58"
+    }
+  ],
+  "resumo": {
+    "totalItens": 1,
+    "quantidadeTotal": 2,
+    "valorTotal": 19.58,
+    "valorTotalFormatado": "R$ 19.58"
+  },
+  "pagamento": {
+    "metodo": "Mercado Pago",
+    "status": "mock",
+    "preferenceId": "mock_1777683853400"
+  }
+}

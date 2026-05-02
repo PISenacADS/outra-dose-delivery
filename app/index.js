@@ -1,11 +1,9 @@
-import ProdutoScreen from "../src/screens/ProdutoScreen";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
 import HomeScreen from "../src/screens/HomeScreen";
-import DadosScreen from "../src/screens/DadosScreen";
+import { initDatabase } from "../src/services/database";
 
 export default function Index() {
-  /* ==========================================
-     CÓDIGO ORIGINAL COMENTADO PARA TESTES
-  =============================================
   const [dbReady, setDbReady] = useState(false);
 
   useEffect(() => {
@@ -19,7 +17,6 @@ export default function Index() {
       </View>
     );
   }
-  ============================================= */
 
   return <HomeScreen />;
 }
