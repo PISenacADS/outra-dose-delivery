@@ -1,6 +1,7 @@
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import FrameComponent2 from "../components/TabBarComponent2";
 import {
   ActivityIndicator,
   Image,
@@ -164,7 +165,9 @@ export default function PerfilScreen() {
             placeholderTextColor="#666"
           />
         </View>
+        
       </ScrollView>
+      <FrameComponent2 />
     </SafeAreaView>
   );
 }
