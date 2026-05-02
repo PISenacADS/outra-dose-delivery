@@ -1,34 +1,77 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  ImageBackground,
-  TextInput,
-} from "react-native";
 import { useRouter } from "expo-router";
-
+import { useEffect, useState } from "react";
+import {
+  Image,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import FrameComponent2 from "../components/TabBarComponent2";
+import { adicionarAoCarrinho, getProdutos } from "../services/api";
 
-import wood from "../../assets/images/Rectangle-14.png";
 import logo from "../../assets/images/Ellipse-1.png";
+import wood from "../../assets/images/Rectangle-14.png";
+
+const CATEGORIAS = [
+  "Cervejas",
+  "Vinhos",
+  "Destilados",
+  "Gelo & Extras",
+  "Petiscos",
+];
 
 export default function HomeScreen() {
   const [endereco, setEndereco] = useState("");
-  const router = useRouter(); 
+  const [produtos, setProdutos] = useState([]);
+  const router = useRouter();
+  const userId = 1;
+
+  useEffect(() => {
+    carregarProdutos();
+  }, []);
+
+  const carregarProdutos = async () => {
+    try {
+      const data = await getProdutos();
+      if (data.success) setProdutos(data.data);
+    } catch (error) {
+      console.error("Erro ao carregar produtos:", error);
+    }
+  };
+
+  const handleAdicionar = async (produto) => {
+    try {
+      await adicionarAoCarrinho(userId, {
+        produtoId: produto.id,
+        nome: produto.nome,
+        preco: produto.preco,
+        quantidade: 1,
+      });
+      alert(`${produto.nome} adicionado ao carrinho!`);
+    } catch (error) {
+      alert("Erro ao adicionar ao carrinho.");
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
-      <ImageBackground source={wood} style={styles.background} resizeMode="cover">
-        <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
+      <ImageBackground
+        source={wood}
+        style={styles.background}
+        resizeMode="cover"
+      >
+        <ScrollView
+          contentContainerStyle={styles.container}
+          showsVerticalScrollIndicator={false}
+        >
           <Image source={logo} style={styles.logo} />
 
           <View style={styles.addressBox}>
             <Text style={styles.addressIcon}>📍</Text>
-
             <TextInput
               placeholder="Digite seu endereço de entrega..."
               placeholderTextColor="#d8d8d8"
@@ -43,12 +86,10 @@ export default function HomeScreen() {
               <Text style={styles.bannerTitle}>
                 Happy Hour Outra Dose: 20% OFF em Cervejas Artesanais! 🔥
               </Text>
-
               <TouchableOpacity style={styles.bannerButton}>
                 <Text style={styles.bannerButtonText}>Aproveitar Agora!</Text>
               </TouchableOpacity>
             </View>
-
             <Image source={logo} style={styles.bannerImage} />
           </View>
 
@@ -58,11 +99,15 @@ export default function HomeScreen() {
             <View style={styles.dot} />
           </View>
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.categories}>
-            {categories.map((item, index) => (
-              <TouchableOpacity 
-                key={index} 
-                style={styles.category} 
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.categories}
+          >
+            {CATEGORIAS.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.category}
                 onPress={() => router.push("/produtos")}
               >
                 <View style={styles.categoryCircle}>
@@ -76,23 +121,28 @@ export default function HomeScreen() {
           <Text style={styles.sectionTitle}>As Mais Geladas!</Text>
 
           <View style={styles.productsContainer}>
-            {products.map((item, index) => (
-              <View key={index} style={styles.card}>
-                <Image source={logo} style={styles.productImage} />
-
-                <Text style={styles.productName}>{item.name}</Text>
-
+            {produtos.map((item) => (
+              <View key={item.id} style={styles.card}>
+                <Image
+                  source={{ uri: item.imagem_url }}
+                  style={styles.productImage}
+                />
+                <Text style={styles.productName}>{item.nome}</Text>
                 <View style={styles.bottom}>
-                  <Text style={styles.price}>{item.price}</Text>
-
-                  <TouchableOpacity style={styles.addButton}>
+                  <Text style={styles.price}>
+                    R$ {item.preco.toFixed(2).replace(".", ",")}
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.addButton}
+                    onPress={() => handleAdicionar(item)}
+                  >
                     <Text style={styles.addText}>+</Text>
                   </TouchableOpacity>
                 </View>
               </View>
             ))}
           </View>
-          
+
           <View style={{ height: 90 }} />
         </ScrollView>
 
@@ -102,39 +152,10 @@ export default function HomeScreen() {
   );
 }
 
-const categories = ["Cervejas", "Vinhos", "Destilados", "Gelo & Extras", "Petiscos"];
-
-const products = [
-  { name: "Eisenbahn Pale Ale", price: "R$ 9,90" },
-  { name: "Heineken 600ml", price: "R$ 12,90" },
-  { name: "Budweiser 350ml", price: "R$ 5,90" },
-  { name: "Skol 269ml", price: "R$ 3,99" },
-  { name: "Corona Extra", price: "R$ 11,90" },
-  { name: "Bombay Sapphire Gin", price: "R$ 89,90" },
-  { name: "Whisky Jack Daniels", price: "R$ 182,49" },
-  { name: "Whisky Red Label", price: "R$ 79,90" },
-  { name: "Vinho Dom Bosco", price: "R$ 14,73" },
-  { name: "Vinho Concha y Toro", price: "R$ 39,90" },
-  { name: "Coca-Cola 1L", price: "R$ 7,49" },
-  { name: "Guaraná Antarctica 2L", price: "R$ 8,99" },
-];
-
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: "#000",
-  },
-  background: {
-    flex: 1,
-    width: "100%",
-  },
-
-  container: {
-    paddingTop: 45, 
-    paddingHorizontal: 14,
-    paddingBottom: 20,
-  },
-
+  mainContainer: { flex: 1, backgroundColor: "#000" },
+  background: { flex: 1, width: "100%" },
+  container: { paddingTop: 45, paddingHorizontal: 14, paddingBottom: 20 },
   logo: {
     width: 190,
     height: 62,
@@ -142,7 +163,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginBottom: 12,
   },
-
   addressBox: {
     backgroundColor: "rgba(255,255,255,0.12)",
     borderRadius: 10,
@@ -152,12 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-
-  addressIcon: {
-    fontSize: 16,
-    marginRight: 8,
-  },
-
+  addressIcon: { fontSize: 16, marginRight: 8 },
   addressInput: {
     flex: 1,
     color: "#fff",
@@ -165,7 +180,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     padding: 0,
   },
-
   banner: {
     height: 120,
     backgroundColor: "rgba(10,15,20,0.78)",
@@ -175,19 +189,13 @@ const styles = StyleSheet.create({
     padding: 14,
     marginBottom: 10,
   },
-
-  bannerTextArea: {
-    flex: 1,
-    justifyContent: "center",
-  },
-
+  bannerTextArea: { flex: 1, justifyContent: "center" },
   bannerTitle: {
     color: "#fff",
     fontSize: 15,
     fontWeight: "900",
     marginBottom: 12,
   },
-
   bannerButton: {
     backgroundColor: "#f7b24c",
     paddingVertical: 7,
@@ -195,50 +203,28 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignSelf: "flex-start",
   },
-
-  bannerButtonText: {
-    color: "#2b1607",
-    fontSize: 11,
-    fontWeight: "900",
-  },
-
+  bannerButtonText: { color: "#2b1607", fontSize: 11, fontWeight: "900" },
   bannerImage: {
     width: 105,
     height: 100,
     resizeMode: "contain",
     alignSelf: "center",
   },
-
   dots: {
     flexDirection: "row",
     justifyContent: "center",
     gap: 6,
     marginBottom: 14,
   },
-
   dotActive: {
     width: 22,
     height: 6,
     backgroundColor: "#f7b24c",
     borderRadius: 10,
   },
-
-  dot: {
-    width: 6,
-    height: 6,
-    backgroundColor: "#555",
-    borderRadius: 3,
-  },
-
-  categories: {
-    marginBottom: 16,
-  },
-
-  category: {
-    alignItems: "center",
-    marginRight: 16,
-  },
-
+  dot: { width: 6, height: 6, backgroundColor: "#555", borderRadius: 3 },
+  categories: { marginBottom: 16 },
+  category: { alignItems: "center", marginRight: 16 },
   categoryCircle: {
     width: 66,
     height: 66,
@@ -249,27 +235,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
-  categoryImage: {
-    width: 48,
-    height: 48,
-    resizeMode: "contain",
-  },
-
+  categoryImage: { width: 48, height: 48, resizeMode: "contain" },
   categoryText: {
     color: "#d7d7d7",
     fontSize: 12,
     fontWeight: "800",
     marginTop: 6,
   },
-
   sectionTitle: {
     color: "#f7a43a",
     fontSize: 19,
     fontWeight: "900",
     marginBottom: 10,
   },
-
+  productsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
   card: {
     width: "32%",
     backgroundColor: "rgba(18,28,38,0.92)",
@@ -277,7 +260,6 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 18,
   },
-
   productImage: {
     width: "100%",
     height: 105,
@@ -285,7 +267,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     backgroundColor: "rgba(255,255,255,0.08)",
   },
-
   productName: {
     color: "#fff",
     fontSize: 13,
@@ -293,20 +274,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
     minHeight: 36,
   },
-
   bottom: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: 8,
   },
-
-  price: {
-    color: "#f7b24c",
-    fontSize: 14,
-    fontWeight: "900",
-  },
-
+  price: { color: "#f7b24c", fontSize: 14, fontWeight: "900" },
   addButton: {
     width: 28,
     height: 28,
@@ -315,17 +289,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   addText: {
     color: "#1a1a1a",
     fontSize: 22,
     fontWeight: "900",
     lineHeight: 24,
-  },
-
-  productsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
   },
 });

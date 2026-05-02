@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   ImageBackground,
+  Linking,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -45,9 +46,18 @@ const Finalizacao = () => {
 
       if (data.success) {
         Alert.alert(
-          "Pagamento confirmado!",
-          `Pedido: ${data.compraId}\nMétodo: ${metodoSelecionado}\nModo: ${data.modo}`,
-          [{ text: "OK", onPress: () => router.push("/acompanhamento") }],
+          "Redirecionar para pagamento?",
+          `Pedido: ${data.compraId}\nModo: ${data.modo}`,
+          [
+            {
+              text: "Pagar agora",
+              onPress: async () => {
+                await Linking.openURL(data.init_point);
+                router.push("/acompanhamento");
+              },
+            },
+            { text: "Cancelar", style: "cancel" },
+          ],
         );
       } else {
         Alert.alert("Erro", "Não foi possível processar o pagamento.");

@@ -80,7 +80,7 @@ const CarrinhoScreen = () => {
     return;
   }
   router.push("/finalizacao");
-};
+  };
 
     try {
       setLoading(true);
