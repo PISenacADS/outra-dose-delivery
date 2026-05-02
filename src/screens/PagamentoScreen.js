@@ -1,37 +1,39 @@
-import React, { useState } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
+  FontAwesome5,
+  Ionicons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import { useState } from "react";
+import {
+  Image,
+  ImageBackground,
   SafeAreaView,
   ScrollView,
-  ImageBackground,
-  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { Ionicons, FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Finalizacao = () => {
   const [metodoSelecionado, setMetodoSelecionado] = useState("pix");
 
   return (
     <ImageBackground
-      source={require("../assets/Cadastro@3x.png")}
+      source={require("../../assets/images/cadastro-bg.png")}
       resizeMode="cover"
       style={styles.background}
     >
       <SafeAreaView style={styles.container}>
         <ScrollView contentContainerStyle={styles.scroll}>
-         
-        <View style={styles.logoContainer}>
-  <Image
-    source={require("../assets/Avatar@3x.png")}
-    style={styles.logoImagem}
-    resizeMode="contain"
-  />
-</View>
-          
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../../assets/images/avatar-bg.png")}
+              style={styles.logoImagem}
+              resizeMode="contain"
+            />
+          </View>
 
           {/* Título */}
           <Text style={styles.titulo}>PAGAMENTOS</Text>
@@ -57,11 +59,7 @@ const Finalizacao = () => {
                 </View>
               </View>
 
-              <MaterialCommunityIcons
-                name="qrcode"
-                size={30}
-                color="#9f9018"
-              />
+              <MaterialCommunityIcons name="qrcode" size={30} color="#9f9018" />
             </View>
           </TouchableOpacity>
 
@@ -114,11 +112,7 @@ const Finalizacao = () => {
             onPress={() => setMetodoSelecionado("dinheiro")}
           >
             <View style={styles.esquerdaOpcao}>
-              <FontAwesome5
-                name="money-bill-wave"
-                size={22}
-                color="#9f9018"
-              />
+              <FontAwesome5 name="money-bill-wave" size={22} color="#9f9018" />
               <Text style={styles.tituloOpcao}>Dinheiro</Text>
             </View>
           </TouchableOpacity>
@@ -179,10 +173,10 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
 
- logoImagem: {
-  width: 230,
-  height: 230,
-},
+  logoImagem: {
+    width: 230,
+    height: 230,
+  },
 
   // TÍTULO
   titulo: {

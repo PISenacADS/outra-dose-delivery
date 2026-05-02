@@ -1,0 +1,41 @@
+{
+  "compraId": "COMPRA-1-1777681634234",
+  "dataHora": "2026-05-02T00:27:14.234Z",
+  "dataHoraFormatada": "01/05/2026, 21:27:14",
+  "usuario": {
+    "id": "1",
+    "email": "cliente@outra-dose.com",
+    "nomeCompleto": "Cliente"
+  },
+  "produtos": [
+    {
+      "produtoId": 5,
+      "nomeProduto": "Cerveja Original 350ml",
+      "precoUnitario": 6.5,
+      "precoUnitarioFormatado": "R$ 6.50",
+      "quantidade": 1,
+      "subtotal": 6.5,
+      "subtotalFormatado": "R$ 6.50"
+    },
+    {
+      "produtoId": 1,
+      "nomeProduto": "Cerveja Heineken 600ml",
+      "precoUnitario": 9.79,
+      "precoUnitarioFormatado": "R$ 9.79",
+      "quantidade": 1,
+      "subtotal": 9.79,
+      "subtotalFormatado": "R$ 9.79"
+    }
+  ],
+  "resumo": {
+    "totalItens": 2,
+    "quantidadeTotal": 2,
+    "valorTotal": 16.29,
+    "valorTotalFormatado": "R$ 16.29"
+  },
+  "pagamento": {
+    "metodo": "Mercado Pago",
+    "status": "mock",
+    "preferenceId": "mock_1777681634245"
+  }
+}

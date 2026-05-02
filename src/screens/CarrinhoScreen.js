@@ -74,14 +74,13 @@ const CarrinhoScreen = () => {
       .toFixed(2);
   };
 
-  const handleFinalizarPedido = async () => {
-    if (itensCarrinho.length === 0) {
-      Alert.alert(
-        "Atenção",
-        "Seu carrinho está vazio. Adicione bebidas antes de finalizar.",
-      );
-      return;
-    }
+  const handleFinalizarPedido = () => {
+  if (itensCarrinho.length === 0) {
+    Alert.alert("Atenção", "Seu carrinho está vazio. Adicione bebidas antes de finalizar.");
+    return;
+  }
+  router.push("/finalizacao");
+};
 
     try {
       setLoading(true);

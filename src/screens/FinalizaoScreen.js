@@ -61,7 +61,7 @@ const Finalizacao = () => {
 
   return (
     <ImageBackground
-      source={require("../../assets/images/Cadastro@3x.png")}
+      source={require("../../assets/images/cadastro-bg.png")}
       resizeMode="cover"
       style={styles.background}
     >
@@ -69,7 +69,7 @@ const Finalizacao = () => {
         <ScrollView contentContainerStyle={styles.scroll}>
           <View style={styles.logoContainer}>
             <Image
-              source={require("../../assets/images/Avatar@3x.png")}
+              source={require("../../assets/images/avatar-bg.png")}
               style={styles.logoImagem}
               resizeMode="contain"
             />

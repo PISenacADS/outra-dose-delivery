@@ -1,0 +1,32 @@
+{
+  "compraId": "COMPRA-1-1777681581918",
+  "dataHora": "2026-05-02T00:26:21.918Z",
+  "dataHoraFormatada": "01/05/2026, 21:26:21",
+  "usuario": {
+    "id": "1",
+    "email": "cliente@outra-dose.com",
+    "nomeCompleto": "Cliente"
+  },
+  "produtos": [
+    {
+      "produtoId": 6,
+      "nomeProduto": "Skol Beats Senses 269ml",
+      "precoUnitario": 7.99,
+      "precoUnitarioFormatado": "R$ 7.99",
+      "quantidade": 1,
+      "subtotal": 7.99,
+      "subtotalFormatado": "R$ 7.99"
+    }
+  ],
+  "resumo": {
+    "totalItens": 1,
+    "quantidadeTotal": 1,
+    "valorTotal": 7.99,
+    "valorTotalFormatado": "R$ 7.99"
+  },
+  "pagamento": {
+    "metodo": "Mercado Pago",
+    "status": "mock",
+    "preferenceId": "mock_1777681581932"
+  }
+}
