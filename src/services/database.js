@@ -119,4 +119,26 @@ export const getUsuarioByEmail = async (email) => {
   }
 };
 
+export const salvarEnderecoLocal = async (
+  userId,
+  label,
+  rua,
+  numero,
+  complemento,
+  bairro,
+  cidade,
+  cep,
+) => {
+  try {
+    const result = await db.runAsync(
+      "INSERT INTO endereco (usuario_id, label, rua, numero, complemento, bairro, cidade, cep) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [userId, label, rua, numero, complemento, bairro, cidade, cep],
+    );
+    return { id: result.lastInsertRowId };
+  } catch (error) {
+    console.error("Erro ao salvar endereço:", error);
+    throw error;
+  }
+};
+
 export default db;

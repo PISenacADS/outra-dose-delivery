@@ -9,13 +9,8 @@ import {
   Text,
   View,
 } from "react-native";
-import {
-  getCarrinho,
-  processarPagamento,
-  removerDoCarrinho,
-} from "../services/api";
-
 import FrameComponent2 from "../components/TabBarComponent2";
+import { getCarrinho, removerDoCarrinho } from "../services/api";
 
 const CarrinhoScreen = () => {
   const router = useRouter();
@@ -75,30 +70,14 @@ const CarrinhoScreen = () => {
   };
 
   const handleFinalizarPedido = () => {
-  if (itensCarrinho.length === 0) {
-    Alert.alert("Atenção", "Seu carrinho está vazio. Adicione bebidas antes de finalizar.");
-    return;
-  }
-  router.push("/finalizacao");
-  };
-
-    try {
-      setLoading(true);
-      const data = await processarPagamento(userId, itensCarrinho, {
-        email: "cliente@outra-dose.com",
-        nome: "Cliente",
-      });
-
-      if (data.success) {
-        Alert.alert("Pedido confirmado!", `Compra: ${data.compraId}`, [
-          { text: "OK", onPress: () => router.push("/pagamento") },
-        ]);
-      }
-    } catch (error) {
-      Alert.alert("Erro", "Não foi possível finalizar o pedido.");
-    } finally {
-      setLoading(false);
+    if (itensCarrinho.length === 0) {
+      Alert.alert(
+        "Atenção",
+        "Seu carrinho está vazio. Adicione bebidas antes de finalizar.",
+      );
+      return;
     }
+    router.push("/finalizacao");
   };
 
   return (
@@ -158,7 +137,7 @@ const CarrinhoScreen = () => {
           )}
         </ScrollView>
 
-                <View style={styles.footer}>
+        <View style={styles.footer}>
           <View style={styles.totalContainer}>
             <Text style={[styles.totalLabel, styles.acmeTypo]}>TOTAL:</Text>
             <Text style={[styles.totalValue, styles.acmeTypo]}>
@@ -172,7 +151,7 @@ const CarrinhoScreen = () => {
             disabled={loading}
           >
             <Text style={[styles.actionButtonText, styles.acmeTypo]}>
-              {loading ? "PROCESSANDO..." : "FINALIZAR PEDIDO"}
+              FINALIZAR PEDIDO
             </Text>
           </Pressable>
         </View>
@@ -188,40 +167,40 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontFamily: "Acme",
   },
-buttonLayout: {
-  backgroundColor: "#af4706",
-  borderRadius: 49,
-  width: 314,
-  height: 50,
-  justifyContent: "center",
-  alignItems: "center",
-  elevation: 5,
-},
+  buttonLayout: {
+    backgroundColor: "#af4706",
+    borderRadius: 49,
+    width: 314,
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
+  },
   backgroundIcon: {
     flex: 1,
     width: "100%",
     height: "100%",
   },
-container: {
-  flex: 1,
-  alignItems: "center",
-  paddingTop: 40,
-  paddingBottom: 110,
-},
+  container: {
+    flex: 1,
+    alignItems: "center",
+    paddingTop: 40,
+    paddingBottom: 110,
+  },
   header: {
     width: "100%",
     paddingHorizontal: 30,
     marginBottom: 20,
   },
- title: {
-  fontSize: 38,
-  color: "#f5d76e",
-  fontFamily: "Acme",
-  textAlign: "center",
-  textShadowColor: "#000000",
-  textShadowOffset: { width: 2, height: 2 },
-  textShadowRadius: 4,
-},
+  title: {
+    fontSize: 38,
+    color: "#f5d76e",
+    fontFamily: "Acme",
+    textAlign: "center",
+    textShadowColor: "#000000",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+  },
   scrollContainer: {
     flex: 1,
     width: "100%",
@@ -289,17 +268,17 @@ container: {
     fontWeight: "bold",
     fontSize: 16,
   },
- footer: {
-  width: "90%",
-  alignItems: "center",
-  paddingHorizontal: 20,
-  paddingVertical: 20,
-  marginBottom: 95,
-  backgroundColor: "rgba(17, 17, 17, 0.57)",
-  borderRadius: 25,
-  borderWidth: 1,
-  borderColor: "#af4706",
-},
+  footer: {
+    width: "90%",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    marginBottom: 95,
+    backgroundColor: "rgba(17, 17, 17, 0.57)",
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: "#af4706",
+  },
   totalContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -314,12 +293,12 @@ container: {
     fontSize: 24,
     color: "#9f9018",
   },
-actionButtonText: {
-  fontSize: 24,
-  color: "#fff",
-  fontFamily: "Acme",
-  textAlign: "center",
-},
+  actionButtonText: {
+    fontSize: 24,
+    color: "#fff",
+    fontFamily: "Acme",
+    textAlign: "center",
+  },
 });
 
 export default CarrinhoScreen;

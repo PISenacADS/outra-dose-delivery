@@ -63,3 +63,22 @@ export const processarPagamento = async (userId, itens, usuario) => {
   const data = await response.json();
   return data;
 };
+
+export const buscarEnderecoPorCep = async (cep) => {
+  const response = await fetch(`${BASE_URL}/endereco/${cep}`);
+  const data = await response.json();
+  return data;
+};
+
+export const salvarEndereco = async (userId, endereco) => {
+  const response = await fetch(`${BASE_URL}/carrinho/endereco`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-user-id": String(userId),
+    },
+    body: JSON.stringify(endereco),
+  });
+  const data = await response.json();
+  return data;
+};
